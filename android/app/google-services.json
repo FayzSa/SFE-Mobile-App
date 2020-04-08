@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "597680301897",
+    "firebase_url": "https://lpsfewebmobile.firebaseio.com",
+    "project_id": "lpsfewebmobile",
+    "storage_bucket": "lpsfewebmobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597680301897:android:e2ac8e67894b9c87989c98",
+        "android_client_info": {
+          "package_name": "com.example.sfe_mobile_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "597680301897-9b8sf8p98b1nurc376ffsa51mbsujhi1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIAkEsDdi1TlDcCfd0zvSbkxXGxZhE64E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "597680301897-9b8sf8p98b1nurc376ffsa51mbsujhi1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
