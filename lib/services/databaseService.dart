@@ -15,7 +15,6 @@ class DatabaseService
     //init or Update  User Data     
   Future initUserData(String fullName , String department ,{bool isAdmin = false})async
   {
-        
         return await mailGest.document(uid).setData({
         'Departement':department,
         'FullName':fullName,
@@ -35,7 +34,7 @@ class DatabaseService
   }
 
     //List of Emails From Snapshot
-    List<Email> _mailListFormSnapshot(QuerySnapshot querySnapshot)
+  List<Email> _mailListFormSnapshot(QuerySnapshot querySnapshot)
  {
   return querySnapshot.documents.map((doc)
   {
@@ -71,15 +70,31 @@ class DatabaseService
     .map(_userDataFromSnapshot);
   }
 
+
+  //Stream All Mails 
+    Stream<List<Email>> get allEmails
+  {
+    Stream<List<Email>> allMails ; 
+    mailGest.snapshots().listen((us){
+     us.documents.forEach((u){
+     allMails =   mailGest.document(u.documentID).
+       collection("Emails").
+       snapshots().map(_mailListFormSnapshot);
+      });
+    });
+    return allMails; 
+  }
   
-
-  // send Mail
-
-
-  // send Reply to an Email
+ 
 
 
- // notifications 
+// send Mail
+
+// send Reply to an Email
+
+// add files 
+
+// notifications 
 
 
 }
