@@ -1,15 +1,21 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sfe_mobile_app/models/user_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:sfe_mobile_app/models/mail_model.dart';
-
+import 'package:path/path.dart' as Path;
 
 class DatabaseService 
 {
+
+  List<String> filesUrls;
   final String uid ; 
   DatabaseService({this.uid});
     // All functions on Database will be under : 
     final CollectionReference mailGest = Firestore.instance.collection('users');
+    final StorageReference storageRef =
+        FirebaseStorage.instance.ref().child("Files/");
     
     
     //init or Update  User Data     
@@ -92,8 +98,19 @@ class DatabaseService
 
 // send Reply to an Email
 
-// add files 
 
+// add files : not sure of this still need a try
+Future<List<String>> uploadFile(List<File> paths)  async{
+  paths.forEach((p) async{
+   StorageUploadTask uploadTask = storageRef.putFile(p);    
+   await uploadTask.onComplete.then((fileURL){
+     print('File Uploaded');  
+     filesUrls.add(fileURL.ref.getDownloadURL().toString());
+   });
+  });
+       
+  return filesUrls;
+ }  
 // notifications 
 
 
