@@ -100,7 +100,7 @@ class DatabaseService
 
 
 // add files : not sure of this still need a try
-Future<List<String>> uploadFile(List<File> paths)  async{
+Future<List<String>> uploadFiles(List<File> paths)  async{
   paths.forEach((p) async{
    StorageUploadTask uploadTask = storageRef.putFile(p);    
    await uploadTask.onComplete.then((fileURL){
