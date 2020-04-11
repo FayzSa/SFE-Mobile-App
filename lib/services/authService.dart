@@ -1,6 +1,6 @@
-import 'package:brew_crew/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:brew_crew/models/user_model.dart';
+import 'package:sfe_mobile_app/models/user_model.dart';
+import 'package:sfe_mobile_app/services/databaseService.dart';
 
 class AuthService{
 
@@ -8,7 +8,6 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 
 // create userObj base on firebase user 
 User _userFromFirebaseUser(FirebaseUser user){
-
       return user != null ? User(uid: user.uid) : null;
 }
 
@@ -62,7 +61,7 @@ Future signInAnon() async{
       AuthResult rs = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = rs.user;
       // Create Document of the user 
-      await DatabaseService(uid: user.uid).updateUserData("0", "New Crew Member", 100);
+      await DatabaseService(uid: user.uid).initUserData("newUser","".toUpperCase());
       return _userFromFirebaseUser(user);
 
     } catch (e) {
