@@ -53,7 +53,7 @@ Future signInAnon() async{
 
   //registre with email and pass 
 
-  Future registreWithEmailAndPassword(String email , String password)async
+  Future registreWithEmailAndPassword(String email , String password , String dep , String fullName)async
   {
     try {
       
@@ -61,7 +61,7 @@ Future signInAnon() async{
       AuthResult rs = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = rs.user;
       // Create Document of the user 
-      await DatabaseService(uid: user.uid).initUserData("newUser","".toUpperCase());
+      await DatabaseService(uid: user.uid).initUserData(fullName,dep.toUpperCase());
       return _userFromFirebaseUser(user);
 
     } catch (e) {
