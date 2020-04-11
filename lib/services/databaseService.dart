@@ -73,12 +73,13 @@ class DatabaseService
 
   
 
-  //send Mail
+  // send Mail
 
 
-  //send Reply to Email
+  // send Reply to an Email
 
-  
+
+ // notifications 
 
 
 }
