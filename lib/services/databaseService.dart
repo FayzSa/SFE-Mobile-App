@@ -52,6 +52,7 @@ class DatabaseService
       traited: doc.data['Traited'],
       repEmail:doc.data['ReplayMail'],
       files: doc.data['Files'],
+      delay: doc.data["Delay"],
       mailID: doc.documentID,
       );
 
@@ -95,9 +96,48 @@ class DatabaseService
 
 
 // send Mail
+  sendMail( List<File> filesPaths, Email em , String depart) 
+  {
+    List<String> urlsLinks = uploadFiles(filesPaths);
+    mailGest.where("Departement", isEqualTo:depart.toUpperCase()).getDocuments().then((value)
+    {
+      value.documents.forEach((f)
+      {
+        mailGest.document(f.documentID).collection("Emails").add({
+          "Body":em.body,
+          "Title": em.title,
+          "ReplayMail":{},
+          "Files": urlsLinks,
+          "DateRecive":em.dateRecive,
+          "Traited":em.traited,
+          "Delay":em.delay
+          }
+        );
+      });
+    });
+
+  }
 
 // send Reply to an Email
-
+sendRepaly(RepEmail repEmail , String emailID, List<File> filesPaths)
+{
+    List<String> urlsLinks = uploadFiles(filesPaths);
+  Map repE = {
+          "Body":repEmail.body,
+          "Title": repEmail.title,
+          "Files": urlsLinks,
+          "replayDate":repEmail.dateRep,
+         
+  };
+  mailGest.getDocuments().then((value){
+    value.documents.forEach((doc){
+      mailGest.document().collection("Emails").document(emailID).updateData({
+      "ReplayMail":repE,
+      "Traited": "Traited"
+      });
+    });
+  });
+}
 
 // add files : not sure of this still need a try
   List<String> uploadFiles(List<File> paths) {

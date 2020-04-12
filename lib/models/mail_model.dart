@@ -7,7 +7,8 @@ class Email
   List<String> files; 
   String traited;
   Map repEmail;
-  Email({this.mailID,this.title , this.body , this.dateRecive , this.files , this.traited ,this.repEmail });
+  String delay;
+  Email({this.mailID,this.title , this.body , this.dateRecive , this.files ,this.delay ,  this.traited ,this.repEmail });
 }
 
 class RepEmail 
