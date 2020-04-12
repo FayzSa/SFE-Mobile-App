@@ -96,9 +96,9 @@ class DatabaseService
 
 
 // send Mail
-  sendMail( List<File> filesPaths, Email em , String depart) 
+  sendMail( List<File> filesPaths, Email em , String depart)async 
   {
-    List<String> urlsLinks = uploadFiles(filesPaths);
+    List<String> urlsLinks = await uploadFiles(filesPaths);
     mailGest.where("Departement", isEqualTo:depart.toUpperCase()).getDocuments().then((value)
     {
       value.documents.forEach((f)
@@ -119,9 +119,9 @@ class DatabaseService
   }
 
 // send Reply to an Email
-sendRepaly(RepEmail repEmail , String emailID, List<File> filesPaths)
+sendRepaly(RepEmail repEmail , String emailID, List<File> filesPaths)async
 {
-    List<String> urlsLinks = uploadFiles(filesPaths);
+    List<String> urlsLinks = await uploadFiles(filesPaths);
   Map repE = {
           "Body":repEmail.body,
           "Title": repEmail.title,
@@ -140,7 +140,7 @@ sendRepaly(RepEmail repEmail , String emailID, List<File> filesPaths)
 }
 
 // add files : not sure of this still need a try
-  List<String> uploadFiles(List<File> paths) {
+  Future<List<String>> uploadFiles(List<File> paths) async{
 
   paths.forEach((p) async{
    StorageUploadTask uploadTask = storageRef.putFile(p);    
