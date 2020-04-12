@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sfe_mobile_app/models/user_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:sfe_mobile_app/models/mail_model.dart';
-import 'package:path/path.dart' as Path;
+
 
 class DatabaseService 
 {
@@ -84,7 +84,7 @@ class DatabaseService
     Stream<List<Email>> allMails ; 
     mailGest.snapshots().listen((us){
      us.documents.forEach((u){
-     allMails =   mailGest.document(u.documentID).
+     allMails = mailGest.document(u.documentID).
        collection("Emails").
        snapshots().map(_mailListFormSnapshot);
       });
@@ -129,14 +129,21 @@ sendRepaly(RepEmail repEmail , String emailID, List<File> filesPaths)async
           "replayDate":repEmail.dateRep,
          
   };
-  mailGest.getDocuments().then((value){
+  mailGest.document().collection("Emails").document(emailID).updateData({
+      "ReplayMail":repE,
+      "Traited": "Traited"
+  });
+
+  /*mailGest.getDocuments().then((value){
     value.documents.forEach((doc){
       mailGest.document().collection("Emails").document(emailID).updateData({
       "ReplayMail":repE,
       "Traited": "Traited"
       });
     });
-  });
+  });*/
+
+  
 }
 
 // add files : not sure of this still need a try
