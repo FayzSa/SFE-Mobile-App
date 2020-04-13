@@ -14,6 +14,9 @@ class MainEmployes extends StatelessWidget {
     final user = Provider.of<UserData>(context);
     return StreamProvider<List<Email>>.value(
       value: DatabaseService(uid: user.uid).emails,
+        child: Container(
+        child: Text("Main Employe"),
+      ),
     );
   }
 }

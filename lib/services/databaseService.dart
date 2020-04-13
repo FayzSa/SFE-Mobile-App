@@ -134,16 +134,19 @@ sendRepaly(RepEmail repEmail , String emailID, List<File> filesPaths)async
       "Traited": "Traited"
   });
 
-  /*mailGest.getDocuments().then((value){
+  /*
+  mailGest.getDocuments().then((value){
     value.documents.forEach((doc){
       mailGest.document().collection("Emails").document(emailID).updateData({
       "ReplayMail":repE,
       "Traited": "Traited"
       });
     });
-  });*/
-
+  });
   
+  */
+
+
 }
 
 // add files : not sure of this still need a try
@@ -160,6 +163,9 @@ sendRepaly(RepEmail repEmail , String emailID, List<File> filesPaths)async
  }  
  
 // notifications 
+
+
+
 
 
 }

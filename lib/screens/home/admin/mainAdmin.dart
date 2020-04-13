@@ -19,6 +19,9 @@ class MainAdmin extends StatelessWidget {
     //All mails 
     return StreamProvider<List<Email>>.value(
       value: DatabaseService().allEmails,
+      child: Container(
+        child: Text("Main Admin"),
+      ),
       
     );
   }
