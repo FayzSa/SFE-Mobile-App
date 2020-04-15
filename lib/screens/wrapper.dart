@@ -6,11 +6,11 @@ import 'package:sfe_mobile_app/screens/home/homeRedirect.dart';
 import 'package:sfe_mobile_app/shared/loading.dart';
 
 class Wrapper extends StatelessWidget {
-Widget _page = null;
+
   
   @override
   Widget build(BuildContext context) {
-  
+  Widget _page ;
   final user = Provider.of<User>(context);
     // set Page to Home or auth 
     _page = user == null ? Auth(): HomeRedirect();

@@ -15,7 +15,8 @@ class UserData
   final String uid,fullName,departement;
   final bool isAdmin;
   List<Email> recivedMails; 
-  UserData({this.uid,this.fullName,this.departement,this.isAdmin , this.recivedMails}); 
+  List emailsList;
+  UserData({this.uid,this.fullName,this.departement,this.isAdmin , this.recivedMails , this.emailsList}); 
   
 }
 

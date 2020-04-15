@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
                  fillColor: Colors.white,
                  filled: true,
                  enabledBorder: OutlineInputBorder(
-                   borderSide: BorderSide(color:Colors.white,width: 2.0),
+                   borderSide: BorderSide(color:Colors.grey[400],width: 2.0),
                    borderRadius: BorderRadius.circular(20),
                  ),
                  focusedBorder: OutlineInputBorder(

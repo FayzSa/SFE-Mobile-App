@@ -19,6 +19,9 @@ class MailGest extends StatelessWidget {
         title: "Gestion Courrier",
         debugShowCheckedModeBanner: false,
         color: Colors.teal[700],
+        theme: ThemeData(
+          primaryColor: Colors.teal[700],
+        ),
         home: Wrapper(),
       ),
     );
