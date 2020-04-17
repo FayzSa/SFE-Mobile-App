@@ -20,12 +20,9 @@ class MainEmployes extends StatelessWidget {
         child: Scaffold(
         body: Column(
           children: <Widget>[
-            Text(user.uid),
-            RaisedButton(onPressed: (){
-              Email em = Email(body: "Fayz" , dateRecive: DateTime.now().toString() , files: [] , title: "Fatzz" , traited: "Still"  );
-              DatabaseService().sendMail([],em,"RH");
-            }
-            ),
+            Text(user.departement),
+           
+            
             RaisedButton(onPressed: () async{
               Loading();
               await AuthService().signOut();

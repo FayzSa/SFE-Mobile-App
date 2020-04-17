@@ -119,7 +119,7 @@ sendRepaly(RepEmail repEmail , String emailID, List<File> filesPaths)async
           "replayDate":repEmail.dateRep,
          
   };
-
+  
   await emailsGest.document(emailID).updateData({
       "ReplayMail":repE,
       "Traited": "Traited"
@@ -140,8 +140,6 @@ sendRepaly(RepEmail repEmail , String emailID, List<File> filesPaths)async
  }  
  
 // notifications 
-
-
 
 
 
