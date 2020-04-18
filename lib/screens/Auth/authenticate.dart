@@ -21,8 +21,8 @@ class _AuthState extends State<Auth> {
   Widget build(BuildContext context) {
   if(showSignIn)
     {
-      return SignIn(toggleView : toggleView);
+      return Scaffold(body: SingleChildScrollView(child: SafeArea(child: SignIn(toggleView : toggleView))));
     }
-    else return Registre(toggleView : toggleView);
+    else return Scaffold(body: SingleChildScrollView(child: SafeArea(child:Registre(toggleView : toggleView))));
   }
   }

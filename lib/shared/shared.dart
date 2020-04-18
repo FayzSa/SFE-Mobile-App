@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
  dynamic textInputDeco = InputDecoration(
                  
                  fillColor: Colors.white,
-                 filled: true,
-                 enabledBorder: OutlineInputBorder(
-                   borderSide: BorderSide(color:Colors.grey[400],width: 2.0),
-                   borderRadius: BorderRadius.circular(20),
-                 ),
-                 focusedBorder: OutlineInputBorder(
-                   borderSide: BorderSide(color:Colors.white30,width: 2.0),
-                   borderRadius: BorderRadius.circular(20)
+                 enabledBorder: UnderlineInputBorder(
+                   borderSide: BorderSide(color:Colors.white60,width: 1.0),
+                   ),
+                 focusedBorder: UnderlineInputBorder(
+                   borderSide: BorderSide(color:Colors.white70,width: 1.5),
+                 
                  ),
                );
