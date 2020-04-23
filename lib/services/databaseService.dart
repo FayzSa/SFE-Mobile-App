@@ -62,10 +62,38 @@ class DatabaseService
   ).toList();
 }
 
+updateTraited(Email em)async
+{
+    await emailsGest.document(em.mailID).updateData({
+      "Traited": "Traited"
+      });
+}
+      updateTraite(Stream<QuerySnapshot> allEmails){
+           allEmails = emailsGest.where("Department",isEqualTo: depRt.toUpperCase())
+       .orderBy("DateRecive",descending: true)
+       .snapshots();
+       allEmails.map(_mailListFormSnapshot).listen((onData){
+         onData.forEach((f){
+           var today = DateTime.now();
+           var lastDay = DateTime.parse(f.dateRecive).add((Duration(days: f.delay)));
+           var diffrence = today.difference(lastDay).inDays;
+          if(diffrence > 0 && f.traited!= "Traited" && f.traited != "Not Traited") {
+            print(diffrence);
+              emailsGest.document(f.mailID).updateData({
+                "Traited": "Not Traited"
+              });
+          }
+         });
+       });
+    } 
   // stream of emails :
     Stream<List<Email>> get emails
   {   
-       return emailsGest.where("Department",isEqualTo: depRt.toUpperCase()).snapshots().map(_mailListFormSnapshot);
+     Stream<QuerySnapshot> allEmails = emailsGest.where("Department",isEqualTo: depRt.toUpperCase())
+       .orderBy("DateRecive",descending: true)
+       .snapshots();
+       updateTraite(allEmails);
+      return allEmails.map(_mailListFormSnapshot);
       
   }
 
@@ -73,7 +101,9 @@ class DatabaseService
   // stream of emails :
     Stream<List<Email>> get allEmails
   {   
-       return emailsGest.snapshots().map(_mailListFormSnapshot);
+    Stream<QuerySnapshot> allEmails = emailsGest.snapshots();
+      updateTraite(allEmails);
+       return allEmails.map(_mailListFormSnapshot);
       
   }
 

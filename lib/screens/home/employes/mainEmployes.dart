@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sfe_mobile_app/models/mail_model.dart';
@@ -18,19 +17,18 @@ class MainEmployes extends StatelessWidget {
     return StreamProvider<List<Email>>.value(
       value: DatabaseService(depRt: user.departement).emails,
         child: Scaffold(
-        body: Column(
-          children: <Widget>[
-            Text(user.departement),
-           
-            
-            RaisedButton(onPressed: () async{
-              Loading();
-              await AuthService().signOut();
-            }),
-            ListMails(),
-          ],
+        body: Container(
+          child:ListMails(),
+
         ),
       ),
     );
   }
-}
+} 
+// Text(user.departement),
+           
+            
+       /*     RaisedButton(onPressed: () async{
+              Loading();
+              await AuthService().signOut();
+            }),*/

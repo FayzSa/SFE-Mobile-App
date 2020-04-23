@@ -9,7 +9,7 @@ class Email
   List<String> files; 
   String traited;
   Map repEmail;
-  String delay;
+  int delay;
   Email({this.mailID,this.title , this.body , this.dateRecive , this.files ,this.delay ,  this.traited ,this.repEmail });
   factory Email.fromFireStore(DocumentSnapshot doc)
   {

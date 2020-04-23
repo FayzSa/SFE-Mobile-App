@@ -1,14 +1,10 @@
-import 'dart:async';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:loading/indicator/ball_pulse_indicator.dart';
 import 'package:loading/indicator/ball_spin_fade_loader_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:sfe_mobile_app/models/mail_model.dart';
-import 'package:sfe_mobile_app/models/user_model.dart';
 import 'package:sfe_mobile_app/services/databaseService.dart';
 import 'package:loading/loading.dart';
+import 'package:sfe_mobile_app/shared/mailTile.dart';
 
 class ListMails extends StatefulWidget {
 
@@ -18,13 +14,34 @@ class ListMails extends StatefulWidget {
 Color buttonColor = Colors.black;
 class _ListMailsState extends State<ListMails> {
  
-     Widget buttonSendChild = Text("Send Mail" , style: TextStyle(color:Colors.white,));
+     //Widget buttonSendChild = Text("Send Mail" , style: TextStyle(color:Colors.white,));
  List<Email> listOfEmails;
 
    @override
   Widget build(BuildContext context) {
-    final  emails = Provider.of<List<Email>>(context)?? []; 
-     return Container(
+    final  emails = Provider.of<List<Email>>(context) ?? []; 
+     return emails.length == 0 ? Center(child: Text("You have No Email",
+     style: TextStyle(
+       color:Colors.black87,
+
+     ),
+     
+     ),): ListView.builder(
+       itemCount: emails.length,
+       itemBuilder: (context ,index)
+       {
+         return MailTile(email: emails[index]);
+       }
+       
+       
+       
+     );}
+}
+
+
+
+/*
+return Container(
        child: Column(
          children: <Widget>[
            RaisedButton(onPressed: () async{
@@ -48,7 +65,4 @@ class _ListMailsState extends State<ListMails> {
        ),
      );
       
-   
-  }
-}
-
+    */
