@@ -7,7 +7,7 @@ import 'package:sfe_mobile_app/screens/home/employes/listMails.dart';
 import 'package:sfe_mobile_app/services/databaseService.dart';
 
 
-class MainEmployes extends StatelessWidget {
+class TraitedMails extends StatelessWidget {
   // This will be Use to logout
   //
  
@@ -15,17 +15,10 @@ class MainEmployes extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<UserData>(context);
     return StreamProvider<List<Email>>.value(
-      value: DatabaseService(depRt: user.departement).emails,
+      value: DatabaseService(depRt: user.departement).traitedEmails,
         child:Container(child: ListMails()),
 
       
     );
   }
 } 
-// Text(user.departement),
-           
-            
-       /*     RaisedButton(onPressed: () async{
-              Loading();
-              await AuthService().signOut();
-            }),*/

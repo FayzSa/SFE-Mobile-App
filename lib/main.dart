@@ -18,11 +18,11 @@ class MailGest extends StatelessWidget {
       child: MaterialApp(
         title: "Gestion Courrier",
   debugShowCheckedModeBanner: false,
-  color: Colors.deepPurple[900],
+  color: Colors.black,
   theme: ThemeData(
  
-    primaryColor: Colors.deepPurple[900],
-    accentColor: Colors.deepPurple[700],
+    primaryColor: Colors.black87,
+    accentColor: Colors.black,
     
 
 

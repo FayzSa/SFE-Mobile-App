@@ -4,6 +4,7 @@ import 'package:sfe_mobile_app/models/user_model.dart';
 import 'package:sfe_mobile_app/screens/Auth/authenticate.dart';
 import 'package:sfe_mobile_app/screens/home/admin/mainAdmin.dart';
 import 'package:sfe_mobile_app/screens/home/employes/mainEmployes.dart';
+import 'package:sfe_mobile_app/screens/home/employes/widgetProvider.dart';
 class HomeMain extends StatelessWidget {
   
   @override
@@ -12,7 +13,7 @@ class HomeMain extends StatelessWidget {
     final userdata = Provider.of<UserData>(context); 
     return userdata == null ? Auth(): 
        SafeArea(
-        child: userdata.isAdmin ? MainAdmin() : MainEmployes() ,
+        child: userdata.isAdmin ? MainAdmin() : WidgetProvider() ,
     );
   }
 }

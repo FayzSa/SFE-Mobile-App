@@ -97,6 +97,26 @@ updateTraited(Email em)async
       
   }
 
+    Stream<List<Email>> get traitedEmails
+  {   
+     Stream<QuerySnapshot> allEmails = emailsGest.where("Department",isEqualTo: depRt.toUpperCase()).where("Traited",isEqualTo: "Traited")
+       .orderBy("DateRecive",descending: true)
+       .snapshots();
+       updateTraite(allEmails);
+      return allEmails.map(_mailListFormSnapshot);
+      
+  }
+
+      Stream<List<Email>> get nonTraitedEmails
+  {   
+     Stream<QuerySnapshot> allEmails = emailsGest.where("Department",isEqualTo: depRt.toUpperCase()).
+        where("Traited",whereIn: ['Not Traited','Still'])
+       .orderBy("DateRecive",descending: true)
+       .snapshots();
+       updateTraite(allEmails);
+      return allEmails.map(_mailListFormSnapshot);
+      
+  }
   
   // stream of emails :
     Stream<List<Email>> get allEmails

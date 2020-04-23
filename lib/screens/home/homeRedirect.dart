@@ -11,9 +11,7 @@ class HomeRedirect extends StatelessWidget {
     final user = Provider.of<User>(context);
     return StreamProvider<UserData>.value(
       value: DatabaseService(uid: user.uid).userData,
-      child: SafeArea(
-        child: HomeMain()  ,
-        ),
+      child: HomeMain(),
     );
   }
 }
