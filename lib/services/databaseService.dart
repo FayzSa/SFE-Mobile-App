@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:path/path.dart' as path;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sfe_mobile_app/models/user_model.dart';
@@ -19,7 +20,7 @@ class DatabaseService
     final CollectionReference emailsGest = Firestore.instance.collection('emails');
 
     final StorageReference storageRef =
-        FirebaseStorage.instance.ref().child("Files/");   
+        FirebaseStorage.instance.ref();   
     
     
     //init or Update  User Data     
@@ -142,7 +143,7 @@ updateTraited(Email em)async
 // send Mail
   sendMail( List<File> filesPaths, Email em , String depart)async 
   {
-    List<String> urlsLinks = await uploadFiles(filesPaths);
+    List<String> urlsLinks = []; //await uploadFiles(filesPaths ,);
    
        await emailsGest.add({
           "Body":em.body,
@@ -161,7 +162,8 @@ updateTraited(Email em)async
 // send Reply to an Email
 sendRepaly(RepEmail repEmail , String emailID, List<File> filesPaths)async
 {
-    List<String> urlsLinks = await uploadFiles(filesPaths);
+    List<String> urlsLinks = await uploadFiles(filesPaths , emailID);
+    
   Map repE = {
           "Body":repEmail.body,
           "Title": repEmail.title,
@@ -177,16 +179,22 @@ sendRepaly(RepEmail repEmail , String emailID, List<File> filesPaths)async
 }
 
 // add files : not sure of this still need a try
-  Future<List<String>> uploadFiles(List<File> paths) async{
-
-  paths.forEach((p) async{
-   StorageUploadTask uploadTask = storageRef.putFile(p);    
-   await uploadTask.onComplete.then((fileURL){
-     print('File Uploaded');  
-     filesUrls.add(fileURL.ref.getDownloadURL().toString());
-   });
-  });   
-  return filesUrls;
+  Future<List<String>> uploadFiles(List<File> paths , String mailID) async{
+    List<String> fileURLS = List();
+  if(paths ==  null ) return []; 
+  for(int i =0 ; i < paths.length ; i++)
+  {
+    String filename =  path.basename(paths[i].path);
+     final StorageReference storageRef =
+        FirebaseStorage.instance.ref().child("$uid/$mailID/$i$filename");
+    
+   final StorageUploadTask uploadTask = storageRef.putFile(paths[i]);
+   await uploadTask.onComplete;
+     String imageUrl = await storageRef.getDownloadURL();
+        fileURLS.add(imageUrl);
+  }  
+   
+  return fileURLS;
  }  
  
 // notifications 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sfe_mobile_app/models/mail_model.dart';
+import 'package:sfe_mobile_app/screens/home/employes/replyForm.dart';
 import 'package:sfe_mobile_app/services/databaseService.dart';
 import 'package:timeago/timeago.dart' as timeago;
 class MailTile extends StatelessWidget {
@@ -7,6 +8,24 @@ class MailTile extends StatelessWidget {
   MailTile({this.email});
   @override
   Widget build(BuildContext context) {
+
+       void _showReplyPanel()
+   {
+
+            Navigator.push(context, MaterialPageRoute<Null>(
+          builder: (BuildContext context) {
+          return Scaffold(body: SingleChildScrollView(child:ReplyForm(email : email)));
+          },
+          fullscreenDialog: true,
+        ));
+
+    /*   showModalBottomSheet(context: context, builder: (context)
+      {
+        return SingleChildScrollView(child:ReplyForm(email : email));
+        
+      });*/
+   }
+
     // Add a new locale messages
     timeago.setLocaleMessages('fr', timeago.FrMessages());
     Color tileColor = Colors.green[200];
@@ -19,7 +38,9 @@ class MailTile extends StatelessWidget {
         f2 =                 
                  FlatButton(
                   child:  Text('Reply' , style: TextStyle(color:Colors.green[300]),),
-                  onPressed: () {/* ... */},
+                  onPressed: () {
+                    _showReplyPanel();   
+                  },
                 );
     }
     }

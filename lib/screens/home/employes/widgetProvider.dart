@@ -50,7 +50,6 @@ String _headerText = "All Mails";
             Icon(Icons.mail, size: 25,color: Colors.white),
             Icon(Icons.drafts, size: 25,color: Colors.white),
             Icon(Icons.cancel, size: 25,color: Colors.white),
-           
             Icon(Icons.exit_to_app, size: 25,color: Colors.white),
             ],
           color: Colors.black87,
