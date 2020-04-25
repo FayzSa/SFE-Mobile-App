@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sfe_mobile_app/models/mail_model.dart';
 import 'package:sfe_mobile_app/screens/home/employes/replyForm.dart';
+import 'package:sfe_mobile_app/screens/home/employes/showMail.dart';
 import 'package:sfe_mobile_app/services/databaseService.dart';
 import 'package:timeago/timeago.dart' as timeago;
 class MailTile extends StatelessWidget {
@@ -9,21 +10,26 @@ class MailTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    String _body = email.body.length > 150 ? "${email.body.substring(0,150)} ... " : email.body ;
+
+         void _showMailPanel()
+   {
+      showModalBottomSheet(context: context, builder: (context)
+      {
+        return Scaffold(
+          backgroundColor: Colors.black87,
+          body: SingleChildScrollView(child: ShowMail(email: email)));
+      });
+   }
        void _showReplyPanel()
    {
 
-            Navigator.push(context, MaterialPageRoute<Null>(
+          Navigator.push(context, MaterialPageRoute<Null>(
           builder: (BuildContext context) {
           return Scaffold(body: SingleChildScrollView(child:ReplyForm(email : email)));
           },
           fullscreenDialog: true,
-        ));
-
-    /*   showModalBottomSheet(context: context, builder: (context)
-      {
-        return SingleChildScrollView(child:ReplyForm(email : email));
-        
-      });*/
+          ));
    }
 
     // Add a new locale messages
@@ -34,10 +40,10 @@ class MailTile extends StatelessWidget {
 
     if(email.traited != "Not Traited" )
     {
-      if(email.repEmail.isEmpty){
+      if(email.repEmail.isEmpty ){
         f2 =                 
                  FlatButton(
-                  child:  Text('Reply' , style: TextStyle(color:Colors.green[300]),),
+                  child:  Text('Reply' , style: TextStyle(color:Colors.black87),),
                   onPressed: () {
                     _showReplyPanel();   
                   },
@@ -47,7 +53,7 @@ class MailTile extends StatelessWidget {
       if(email.traited == "Still")
       {
         f =  FlatButton(
-                  child:  Text('Traite' , style: TextStyle(color:Colors.green[300]),),
+                  child:  Text('Traite' , style: TextStyle(color:Colors.black87),),
                   onPressed: () {
                     DatabaseService().updateTraited(email);
                   },
@@ -67,6 +73,7 @@ class MailTile extends StatelessWidget {
     return  Padding(
       padding: EdgeInsets.all(2.0),
       child: Card(
+        
         elevation: 1.0,
           shape: RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(30.0),
@@ -77,7 +84,9 @@ class MailTile extends StatelessWidget {
           children: <Widget>[
             SizedBox(height: 5,),
              ListTile(
-               
+               onTap: (){
+                 _showMailPanel();
+               },
               
               title:   Row(
                      children: <Widget>[
@@ -94,7 +103,7 @@ class MailTile extends StatelessWidget {
                      ],
                    ),
       
-              subtitle: Text(email.body),
+              subtitle: Text(_body),
             ),
             ButtonBar(
               children: <Widget>[
@@ -120,42 +129,3 @@ class MailTile extends StatelessWidget {
   }
 }
 
-
-/* child: Container(
-         child: Padding(
-           padding: const EdgeInsets.all(15.0),
-           child: Column(
-             children: <Widget>[
-               Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                 children: <Widget>[
-                   Row(
-                     children: <Widget>[
-                       CircleAvatar(
-              radius: 4.0,
-              backgroundColor: Colors.green[300],
-                ),
-                SizedBox(width: 10),
-                Text(email.title , style: TextStyle(
-                  color:Colors.black,
-                  fontSize: 19,
-
-                ),),
-                     ],
-                   ),
-               
-                Text(timeago.format(DateTime.parse(email.dateRecive)),
-                style: TextStyle(
-                  color:Colors.black54,
-                  fontSize: 10
-                ),
-
-                ),
-                
-                 ],
-               )
-             ],
-           ),
-         ),
-       ),
- */

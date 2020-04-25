@@ -78,10 +78,18 @@ updateTraited(Email em)async
            var today = DateTime.now();
            var lastDay = DateTime.parse(f.dateRecive).add((Duration(days: f.delay)));
            var diffrence = today.difference(lastDay).inDays;
-          if(diffrence > 0 && f.traited!= "Traited" && f.traited != "Not Traited") {
+          if(diffrence >  - 1 && f.traited != "Traited" && f.traited != "Not Traited") {
             print(diffrence);
               emailsGest.document(f.mailID).updateData({
-                "Traited": "Not Traited"
+                "Traited": "Not Traited",
+                
+              });
+          }
+         if(diffrence > - 1 && f.repEmail.isEmpty )
+          {
+              emailsGest.document(f.mailID).updateData({
+                "ReplayMail": {"NOTHING":"NOTHING"},
+                
               });
           }
          });
@@ -143,7 +151,7 @@ updateTraited(Email em)async
 // send Mail
   sendMail( List<File> filesPaths, Email em , String depart)async 
   {
-    List<String> urlsLinks = []; //await uploadFiles(filesPaths ,);
+    List<String> urlsLinks = await uploadFilesAdmins(filesPaths,em,depart);
    
        await emailsGest.add({
           "Body":em.body,
@@ -178,7 +186,7 @@ sendRepaly(RepEmail repEmail , String emailID, List<File> filesPaths)async
       });
 }
 
-// add files : not sure of this still need a try
+// add files for Services
   Future<List<String>> uploadFiles(List<File> paths , String mailID) async{
     List<String> fileURLS = List();
   if(paths ==  null ) return []; 
@@ -196,6 +204,28 @@ sendRepaly(RepEmail repEmail , String emailID, List<File> filesPaths)async
    
   return fileURLS;
  }  
+
+ // Add Files for Admins
+
+
+ Future<List<String>> uploadFilesAdmins(List<File> paths , Email em , String depart) async{
+    List<String> fileURLS = List();
+  if(paths ==  null ) return []; 
+  for(int i =0 ; i < paths.length ; i++)
+  {
+    String filename =  path.basename(paths[i].path);
+     final StorageReference storageRef =
+        FirebaseStorage.instance.ref().child("$uid/$depart/${em.title}/$i$filename");
+    
+   final StorageUploadTask uploadTask = storageRef.putFile(paths[i]);
+   await uploadTask.onComplete;
+     String imageUrl = await storageRef.getDownloadURL();
+        fileURLS.add(imageUrl);
+  }  
+   
+  return fileURLS;
+ }  
+ 
  
 // notifications 
 

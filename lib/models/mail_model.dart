@@ -6,7 +6,7 @@ class Email
   String title;
   String body ; 
   String dateRecive ; 
-  List<String> files; 
+  List<dynamic> files; 
   String traited;
   Map repEmail;
   int delay;

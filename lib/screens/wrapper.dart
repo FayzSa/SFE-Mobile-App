@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sfe_mobile_app/models/user_model.dart';
@@ -5,18 +7,30 @@ import 'package:sfe_mobile_app/screens/Auth/authenticate.dart';
 import 'package:sfe_mobile_app/screens/home/homeRedirect.dart';
 import 'package:sfe_mobile_app/shared/loading.dart';
 
-class Wrapper extends StatelessWidget {
+class Wrapper extends StatefulWidget {
+  @override
+  _WrapperState createState() => _WrapperState();
+}
 
-  
+class _WrapperState extends State<Wrapper> {
+  Widget _page  = Loading();
+  @override
+  void initState() { 
+    super.initState();
+    Timer(Duration(seconds: 10), (){
+      setState(() {
+        _page = Auth();
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-  Widget _page ;
+  
   final user = Provider.of<User>(context);
     // set Page to Home or auth 
-    _page = user == null ? Auth(): HomeRedirect();
-    // Loading or go to Auth or Home 
-    return _page == null ? Loading() : _page;
+    return user == null ? _page : HomeRedirect();
 
-  
+   
   }
 }

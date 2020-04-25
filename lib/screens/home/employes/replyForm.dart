@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sfe_mobile_app/models/mail_model.dart';
@@ -120,6 +119,7 @@ SizedBox(height: 40,),
         ButtonBar(
           children: <Widget>[
             FlatButton(
+              
               onPressed: ()
               async {
                 FocusScope.of(context).unfocus(focusPrevious: true);
@@ -128,9 +128,10 @@ SizedBox(height: 40,),
               },
                         child: Row(
                 children: <Widget>[
-                  Icon(Icons.attach_file),
+                  Icon(Icons.attach_file , color: Colors.white,),
                   Text("Pick File" , style: TextStyle(
-                    fontSize: 15
+                   
+                    color: Colors.white
                   ),),
                 ],
 
@@ -139,7 +140,7 @@ SizedBox(height: 40,),
             ),
             
               FlatButton(
-                    child:  Text('Send Reply' , style: TextStyle(color:Colors.green[300]),),
+                    child:  Text('Send Reply' , style: TextStyle(color:Colors.white),),
                     onPressed: () async{
                        if(_formKey.currentState.validate())
                   { 
