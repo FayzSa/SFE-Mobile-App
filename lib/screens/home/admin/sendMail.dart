@@ -1,39 +1,60 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:sfe_mobile_app/models/mail_model.dart';
-import 'package:sfe_mobile_app/models/user_model.dart';
 import 'package:sfe_mobile_app/services/databaseService.dart';
 import 'package:sfe_mobile_app/shared/shared.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:loading/loading.dart';
 import 'package:loading/indicator/ball_spin_fade_loader_indicator.dart';
+import 'package:material_dropdown_formfield/material_dropdown_formfield.dart';
 
-class ReplyForm extends StatefulWidget {
-  final Email email ;
-  ReplyForm({this.email}); 
-  
+class SendMailForm extends StatefulWidget {
+ 
   @override
-  _ReplyFormState createState() => _ReplyFormState();
+  _SendMailFormState createState() => _SendMailFormState();
 }
 
-class _ReplyFormState extends State<ReplyForm> {
+class _SendMailFormState extends State<SendMailForm> {
 
-  
+  Color col = Colors.white70;
   final _formKey = GlobalKey<FormState>();
-
+  final List<String> delay = [
+  "1","2","3","4","5","6","7","8","9","10",
+  "11","12","13","14","15","16","17","18","19","20",
+  "21","22","23","24","25","26","27","28","29","30",
+  "31","32","33","34","35","36","37","38","39","40",
+  "41","42","43","44","45","46","47","48","49","50",
+  "51","52","53","54","55","56","57","58","59","60",
+  "61","62","63","64","65","66","67","68","69","70",
+  "71","72","73","74","75","76","77","78","79","80",
+  "81","82","83","84","85","86","87","88","89","90"
+  "91","92","93","94","95","96","97","98","99"
+  
+  ];
   String _title;
   String _body;
   List<File> _files = [];
   DateTime _dateTime = DateTime.now();
+  int del ;
+  String traited = "Still";
+  String department ;
+  final String dep = "Tous";
+  final int dely = 0;
+  Map repEmail = {};
+  final List<String> departs = ['Tous','RH','INFO',];
   bool _enabled = true;
   bool visiblity = true;
   Widget _pickFile ;
+  Widget _sendMail = Text('Send Mail' , style: TextStyle(color:Colors.white));
+ FocusNode focusNode = FocusNode();
 
-    Widget _sendMail = Text('Send Reply' , style: TextStyle(color:Colors.white));
+@override
+void initState() { 
+  super.initState();
+  focusNode.unfocus(focusPrevious: true);
+}
 
-  
   @override
   Widget build(BuildContext context) {
 
@@ -58,11 +79,12 @@ class _ReplyFormState extends State<ReplyForm> {
               
             );
     
-    final user = Provider.of<User>(context);
-  String _mailID = widget.email.mailID;
+
+
+    
     return SingleChildScrollView(
       child: Container(
-        height: MediaQuery.of(context).size.height,
+       
         color:Colors.black87,
         child: Form(
           key: _formKey,
@@ -82,11 +104,21 @@ class _ReplyFormState extends State<ReplyForm> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
+
+
+
+
+
+
+
+
+
+                      
                       Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: Column(
                           children: <Widget>[
-                            Text("Reply to Mail" ,style: TextStyle(
+                            Text("Send Mail" ,style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
                               fontSize: 23
@@ -98,8 +130,7 @@ class _ReplyFormState extends State<ReplyForm> {
                     ],
                   ),
                 ),
-              SizedBox(height:20),
-             
+              
               SizedBox(height: 20,),
                Padding(
                  padding: const EdgeInsets.all(20.0),
@@ -120,7 +151,7 @@ class _ReplyFormState extends State<ReplyForm> {
         ),
                ),
 
-SizedBox(height: 40,),
+SizedBox(height: 20,),
              Padding(
                padding: const EdgeInsets.all(20.0),
                child: TextFormField(
@@ -142,7 +173,73 @@ SizedBox(height: 40,),
           },
         ),
              ),
-        SizedBox(height: 40,),
+        SizedBox(height: 20,),
+Padding(
+                 padding: const EdgeInsets.all(20.0),
+                 child: TextFormField(
+           enabled: _enabled,
+          style: TextStyle(color:Colors.white70),
+          decoration: textInputDeco.copyWith(hintText:"Delay par jour" , hintStyle:TextStyle(color: Colors.white60 , fontSize: 14), 
+           prefixIcon: Icon(Icons.view_day , color:Colors.white54),
+          ),
+          
+          validator: (value)=> value.isEmpty || int.tryParse(value) == null ? "Entre a delay or valide delay" : null,
+          onChanged: (value)
+          {
+                  setState(() {
+        del = int.parse(value) ?? 0;
+                  });
+          },
+        ),
+               ),
+      
+       Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: <Widget>[
+                Align(
+          
+          alignment: Alignment.topLeft,
+                  child: Text('Service' , style: TextStyle(
+            color:Colors.white70,
+            fontSize: 12
+          ),),
+        ),
+         SizedBox(height: 3),
+         Container(
+           decoration: BoxDecoration(
+             color: Colors.white
+           ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: DropdownButton(
+                  focusNode: focusNode,
+                  isExpanded: true,
+                  
+                // style:TextStyle(color: Colors.white70),
+                  hint:  Text("Please Choose a Department" , style:TextStyle(color: Colors.black87)),
+                  value: department ,
+                  items: 
+                  departs.map((s){
+                      return DropdownMenuItem(
+                        value: s.toString(),
+                        child: new Text("$s", ),
+                        );
+                  }).toList(), 
+                  onChanged: 
+                  (val) {
+                      setState(() {
+                        department=val;
+                         print(department.toString());
+                      });
+                  }),
+                    ),
+         ),
+            ],
+          ),
+        ),
+    
+        SizedBox(height: 20,),
         ButtonBar(
           children: <Widget>[
               Visibility(
@@ -160,10 +257,11 @@ SizedBox(height: 40,),
                         _sendMail =
                          Loading(indicator: BallSpinFadeLoaderIndicator(), size: 30.0,color: Colors.white);
                       });
-                      RepEmail rep = RepEmail(body: _body , dateRep: _dateTime.toString() , title:_title); 
-                     
-
-                     await DatabaseService(uid: user.uid).sendRepaly(rep, _mailID, _files);
+                      if(department=='Tous'){
+                        department = "ALL";
+                      }
+                      Email email = Email(body: _body , dateRecive: _dateTime.toString() , title:_title , delay: del , department: department,files: _files, repEmail: repEmail,traited: traited); 
+                     await DatabaseService().sendMail( _files,email, department);
                          setState(() {
                             _enabled = false;
                            _sendMail = Row(
@@ -175,7 +273,7 @@ SizedBox(height: 40,),
                              ],
                            );
                          });
-                      Navigator.pop(context);
+                    Navigator.pop(context);
                   }
                     },
                   )

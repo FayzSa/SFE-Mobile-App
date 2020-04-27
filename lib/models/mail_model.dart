@@ -10,7 +10,8 @@ class Email
   String traited;
   Map repEmail;
   int delay;
-  Email({this.mailID,this.title , this.body , this.dateRecive , this.files ,this.delay ,  this.traited ,this.repEmail });
+  String department;
+  Email({this.mailID,this.title ,this.department, this.body , this.dateRecive , this.files ,this.delay ,  this.traited ,this.repEmail });
   factory Email.fromFireStore(DocumentSnapshot doc)
   {
     Map data = doc.data ;
@@ -31,7 +32,7 @@ class RepEmail
 {
   String title;
   String body ; 
-  DateTime dateRep ; 
-  List<String> files; 
+  String dateRep ; 
+  List<dynamic> files; 
   RepEmail({this.title , this.body , this.dateRep , this.files  });
 }

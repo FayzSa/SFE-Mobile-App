@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:path/path.dart' as path;
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sfe_mobile_app/models/user_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -57,6 +56,7 @@ class DatabaseService
       repEmail:doc.data['ReplayMail'],
       files: doc.data['Files'],
       delay: doc.data["Delay"],
+      department: doc.data['Department'],
       mailID: doc.documentID,
       );   
   }
@@ -70,22 +70,21 @@ updateTraited(Email em)async
       });
 }
       updateTraite(Stream<QuerySnapshot> allEmails){
-           allEmails = emailsGest.where("Department",isEqualTo: depRt.toUpperCase())
-       .orderBy("DateRecive",descending: true)
-       .snapshots();
+     
        allEmails.map(_mailListFormSnapshot).listen((onData){
          onData.forEach((f){
            var today = DateTime.now();
            var lastDay = DateTime.parse(f.dateRecive).add((Duration(days: f.delay)));
-           var diffrence = today.difference(lastDay).inDays;
-          if(diffrence >  - 1 && f.traited != "Traited" && f.traited != "Not Traited") {
-            print(diffrence);
+           var diffrence = today.difference(lastDay).inMinutes;
+          if(diffrence > 0 && f.traited != "Traited" && f.traited != "Not Traited") {
+           // print(diffrence);
               emailsGest.document(f.mailID).updateData({
                 "Traited": "Not Traited",
                 
               });
           }
-         if(diffrence > - 1 && f.repEmail.isEmpty )
+         
+         if(diffrence > 0 && f.repEmail.isEmpty )
           {
               emailsGest.document(f.mailID).updateData({
                 "ReplayMail": {"NOTHING":"NOTHING"},
@@ -98,7 +97,7 @@ updateTraited(Email em)async
   // stream of emails :
     Stream<List<Email>> get emails
   {   
-     Stream<QuerySnapshot> allEmails = emailsGest.where("Department",isEqualTo: depRt.toUpperCase())
+     Stream<QuerySnapshot> allEmails = emailsGest.where("Department",whereIn: [ depRt.toUpperCase() , "ALL"])
        .orderBy("DateRecive",descending: true)
        .snapshots();
        updateTraite(allEmails);
@@ -108,7 +107,7 @@ updateTraited(Email em)async
 
     Stream<List<Email>> get traitedEmails
   {   
-     Stream<QuerySnapshot> allEmails = emailsGest.where("Department",isEqualTo: depRt.toUpperCase()).where("Traited",isEqualTo: "Traited")
+     Stream<QuerySnapshot> allEmails = emailsGest.where("Department",whereIn: [ depRt.toUpperCase() , "ALL"]).where("Traited",isEqualTo: "Traited")
        .orderBy("DateRecive",descending: true)
        .snapshots();
        updateTraite(allEmails);
@@ -118,7 +117,7 @@ updateTraited(Email em)async
 
       Stream<List<Email>> get nonTraitedEmails
   {   
-     Stream<QuerySnapshot> allEmails = emailsGest.where("Department",isEqualTo: depRt.toUpperCase()).
+     Stream<QuerySnapshot> allEmails = emailsGest.where("Department",whereIn: [ depRt.toUpperCase() , "ALL"]).
         where("Traited",whereIn: ['Not Traited','Still'])
        .orderBy("DateRecive",descending: true)
        .snapshots();
@@ -130,7 +129,7 @@ updateTraited(Email em)async
   // stream of emails :
     Stream<List<Email>> get allEmails
   {   
-    Stream<QuerySnapshot> allEmails = emailsGest.snapshots();
+    Stream<QuerySnapshot> allEmails = emailsGest.orderBy("DateRecive",descending: true).snapshots();
       updateTraite(allEmails);
        return allEmails.map(_mailListFormSnapshot);
       
@@ -151,7 +150,7 @@ updateTraited(Email em)async
 // send Mail
   sendMail( List<File> filesPaths, Email em , String depart)async 
   {
-    List<String> urlsLinks = await uploadFilesAdmins(filesPaths,em,depart);
+    List<String> urlsLinks = await uploadFilesAdmins(filesPaths,em) ?? [];
    
        await emailsGest.add({
           "Body":em.body,
@@ -167,10 +166,11 @@ updateTraited(Email em)async
 
   }
 
+
 // send Reply to an Email
 sendRepaly(RepEmail repEmail , String emailID, List<File> filesPaths)async
 {
-    List<String> urlsLinks = await uploadFiles(filesPaths , emailID);
+    List<String> urlsLinks = await uploadFiles(filesPaths , emailID)?? [];
     
   Map repE = {
           "Body":repEmail.body,
@@ -208,14 +208,14 @@ sendRepaly(RepEmail repEmail , String emailID, List<File> filesPaths)async
  // Add Files for Admins
 
 
- Future<List<String>> uploadFilesAdmins(List<File> paths , Email em , String depart) async{
+ Future<List<String>> uploadFilesAdmins(List<File> paths , Email em ) async{
     List<String> fileURLS = List();
   if(paths ==  null ) return []; 
   for(int i =0 ; i < paths.length ; i++)
   {
     String filename =  path.basename(paths[i].path);
      final StorageReference storageRef =
-        FirebaseStorage.instance.ref().child("$uid/$depart/${em.title}/$i$filename");
+        FirebaseStorage.instance.ref().child("${em.department}/${em.title}/$i$filename");
     
    final StorageUploadTask uploadTask = storageRef.putFile(paths[i]);
    await uploadTask.onComplete;
@@ -229,6 +229,18 @@ sendRepaly(RepEmail repEmail , String emailID, List<File> filesPaths)async
  
 // notifications 
 
+// Departemnts Gestion 
+
+//Departs from snapshot 
+
+//Stream of departs
+
+//Add 
+
+//Delete 
+
+
+//Update 
 
 
 }
