@@ -27,7 +27,12 @@ class Email
     );
   }
 }
-
+class Departs
+{
+  String departsName;
+  String departID;
+  Departs({this.departsName , this.departID});
+}
 class RepEmail 
 {
   String title;

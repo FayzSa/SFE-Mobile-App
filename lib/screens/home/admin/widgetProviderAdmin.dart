@@ -1,5 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sfe_mobile_app/models/mail_model.dart';
 import 'package:sfe_mobile_app/screens/home/admin/mainAdmin.dart';
 import 'package:sfe_mobile_app/screens/home/admin/sendMail.dart';
 import 'package:sfe_mobile_app/services/authService.dart';
@@ -12,14 +14,14 @@ class WdigetProviderAdmin extends StatefulWidget {
 
 class _WdigetProviderAdminState extends State<WdigetProviderAdmin> {
    GlobalKey _bottomNavigationKey = GlobalKey();
-        void _sendMailPanel()
+        void _sendMailPanel(List<Departs> dep)
    {
 
             Navigator.push(context, MaterialPageRoute<Null>(
           builder: (BuildContext context) {
           return Scaffold(
             backgroundColor: Colors.black87,
-            body: SingleChildScrollView(child:SendMailForm() ));
+            body: SingleChildScrollView(child:SendMailForm(departs: dep,) ));
           },
           fullscreenDialog: true,
         ));
@@ -50,12 +52,14 @@ Widget _showPage = MainAdmin();
 
   @override
   Widget build(BuildContext context) {
+    
+    final departs =Provider.of<List<Departs>>(context) ?? [];
    return Scaffold(
            floatingActionButton: FloatingActionButton(
              
         onPressed:(){
           setState(() {
-          _sendMailPanel();
+          _sendMailPanel(departs);
           });
           },
         backgroundColor: Colors.black,

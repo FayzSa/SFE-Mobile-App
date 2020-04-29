@@ -17,18 +17,19 @@ class DatabaseService
     // All functions on Database will be under : 
     final CollectionReference mailGest = Firestore.instance.collection('users');
     final CollectionReference emailsGest = Firestore.instance.collection('emails');
+    final CollectionReference departGest = Firestore.instance.collection('Departments');
 
     final StorageReference storageRef =
         FirebaseStorage.instance.ref();   
     
     
     //init or Update  User Data     
-  Future initUserData(String fullName , String department ,{bool isAdmin = false})async
+  Future initUserData(String fullName , String department ,bool isAdmin)async
   {
         return await mailGest.document(uid).setData({
         'Departement':department,
         'FullName':fullName,
-        'isAdmin': isAdmin , 
+        'isAdmin': isAdmin, 
        });
   } 
 
@@ -96,8 +97,8 @@ updateTraited(Email em)async
     } 
   // stream of emails :
     Stream<List<Email>> get emails
-  {   
-     Stream<QuerySnapshot> allEmails = emailsGest.where("Department",whereIn: [ depRt.toUpperCase() , "ALL"])
+  {   // remove to upper
+     Stream<QuerySnapshot> allEmails = emailsGest.where("Department",whereIn: [ depRt , "Tous"])
        .orderBy("DateRecive",descending: true)
        .snapshots();
        updateTraite(allEmails);
@@ -107,21 +108,28 @@ updateTraited(Email em)async
 
     Stream<List<Email>> get traitedEmails
   {   
-     Stream<QuerySnapshot> allEmails = emailsGest.where("Department",whereIn: [ depRt.toUpperCase() , "ALL"]).where("Traited",isEqualTo: "Traited")
-       .orderBy("DateRecive",descending: true)
-       .snapshots();
-       updateTraite(allEmails);
+     Stream<QuerySnapshot> allEmails =
+      emailsGest.
+      where("Department",whereIn: [ depRt , "Tous"]).
+      where("Traited",isEqualTo: "Traited").
+      orderBy("DateRecive",descending: true).
+      snapshots();
+      updateTraite(allEmails);
       return allEmails.map(_mailListFormSnapshot);
       
   }
 
       Stream<List<Email>> get nonTraitedEmails
   {   
-     Stream<QuerySnapshot> allEmails = emailsGest.where("Department",whereIn: [ depRt.toUpperCase() , "ALL"]).
-        where("Traited",whereIn: ['Not Traited','Still'])
-       .orderBy("DateRecive",descending: true)
-       .snapshots();
-       updateTraite(allEmails);
+
+     Stream<QuerySnapshot> allEmails = 
+        emailsGest.
+        where("Department",isEqualTo:depRt).
+        where("Traited",whereIn : ["Not Traited" , "Still"]).
+        //where("Traited" , isEqualTo: "Still").
+        orderBy("DateRecive",descending: true).
+        snapshots();
+        updateTraite(allEmails);
       return allEmails.map(_mailListFormSnapshot);
       
   }
@@ -160,7 +168,7 @@ updateTraited(Email em)async
           "DateRecive":em.dateRecive,
           "Traited":em.traited,
           "Delay":em.delay,
-          "Department":depart.toUpperCase()
+          "Department":depart // Remove To Upper
           }
         );
 
@@ -229,18 +237,59 @@ sendRepaly(RepEmail repEmail , String emailID, List<File> filesPaths)async
  
 // notifications 
 
+
+
+
+
 // Departemnts Gestion 
 
 //Departs from snapshot 
 
+    //User Data From Snapshots 
+    List<Departs> _departsFromSnapshot(QuerySnapshot snapshot)
+  {
+    return snapshot.documents.map((doc){
+      return Departs(
+        departID: doc.documentID,
+        departsName: doc.data["DepartName"],
+      );
+    }).toList();
+  }
+
+    
 //Stream of departs
+  Stream<List<Departs>> get departments
+  {
+    return departGest.snapshots()
+    .map(_departsFromSnapshot);
+   }
 
 //Add 
-
+addDeprt(String depName) async{
+  await departGest.add({
+    "DepartName":depName
+  });
+}
 //Delete 
-
-
+delDeprt(String depID) async{
+  departGest.document(depID).delete();
+}
 //Update 
+
+updateDeprt(String  depNew ,String depID) async{
+  departGest.document(depID).updateData(
+    {
+      "DepartName":depNew
+    }
+  );
+}
+
+
+//Delete Users //{Disable} User
+
+
+//Update User only Admin 
+
 
 
 }

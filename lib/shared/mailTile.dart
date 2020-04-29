@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sfe_mobile_app/models/mail_model.dart';
 import 'package:sfe_mobile_app/screens/home/employes/replyForm.dart';
 import 'package:sfe_mobile_app/screens/home/employes/showMail.dart';
@@ -9,8 +10,10 @@ class MailTile extends StatelessWidget {
   MailTile({this.email});
   @override
   Widget build(BuildContext context) {
-
-    String _body = email.body.length > 150 ? "${email.body.substring(0,150)} ... " : email.body ;
+   final allDeparts = Provider.of<List<Departs>>(context) ?? [];
+   String name = allDeparts.isEmpty ? "": allDeparts[0].departID;
+   
+       String _body = email.body.length > 150 ? "${email.body.substring(0,150)} ${name} ... " : email.body ;
 
          void _showMailPanel()
    {

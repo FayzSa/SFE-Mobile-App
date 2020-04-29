@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sfe_mobile_app/models/mail_model.dart';
 import 'package:sfe_mobile_app/models/user_model.dart';
 import 'package:sfe_mobile_app/screens/Auth/authenticate.dart';
 import 'package:sfe_mobile_app/screens/home/homeRedirect.dart';
+import 'package:sfe_mobile_app/services/databaseService.dart';
 import 'package:sfe_mobile_app/shared/loading.dart';
 
 class Wrapper extends StatefulWidget {
@@ -19,7 +21,9 @@ class _WrapperState extends State<Wrapper> {
     super.initState();
     Timer(Duration(seconds: 10), (){
       setState(() {
-        _page = Auth();
+        _page = StreamProvider<List<Departs>>.value(
+          value: DatabaseService().departments,
+          child: Auth());
       });
     });
   }
@@ -29,7 +33,10 @@ class _WrapperState extends State<Wrapper> {
   
   final user = Provider.of<User>(context);
     // set Page to Home or auth 
-    return user == null ? _page : HomeRedirect();
+    return user == null ? _page : StreamProvider<List<Departs>>.value(
+          value: DatabaseService().departments,
+          child: HomeRedirect()
+          );
 
    
   }
