@@ -1,29 +1,30 @@
 import "package:flutter/material.dart";
 import 'package:loading/indicator/ball_spin_fade_loader_indicator.dart';
 import 'package:loading/loading.dart';
+import 'package:sfe_mobile_app/models/user_model.dart';
 import 'package:sfe_mobile_app/services/databaseService.dart';
 import 'package:sfe_mobile_app/shared/shared.dart';
-class AddDep extends StatefulWidget {
-
+class ModiferAdmin extends StatefulWidget {
+final UserData userDat ; 
+ModiferAdmin({this.userDat});
   @override
-  _AddDepState createState() => _AddDepState();
+  _ModiferAdminState createState() => _ModiferAdminState();
 }
 
-class _AddDepState extends State<AddDep> {
+class _ModiferAdminState extends State<ModiferAdmin> {
 
    
 final _formkey = GlobalKey<FormState>();
-String dep ;
+String name ;
 bool _enabled = true;
 final _formKey = GlobalKey<FormState>();
 
-Widget _sendMail = Text('Add Service' , style: TextStyle(color:Colors.white));
+Widget _sendMail = Text('Modifie Admin' , style: TextStyle(color:Colors.white));
 
   
   @override
   Widget build(BuildContext context) {
-      return SingleChildScrollView(
-      child: Container(
+      return Container(
        
         color:Colors.black87,
         child: Form(
@@ -49,7 +50,7 @@ Widget _sendMail = Text('Add Service' , style: TextStyle(color:Colors.white));
                         child: Column(
                           children: <Widget>[
                             Center(
-                              child: Text("Ajouter Service" ,style: TextStyle(
+                              child: Text("Modifie Admin" ,style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 23
@@ -66,18 +67,18 @@ Widget _sendMail = Text('Add Service' , style: TextStyle(color:Colors.white));
                Padding(
                  padding: const EdgeInsets.all(10.0),
                  child: TextFormField(
-                   
+                   initialValue: widget.userDat.fullName,
         enabled: _enabled,
         style: TextStyle(color:Colors.white70),
-        decoration: textInputDeco.copyWith(hintText:"Nom De Service" , hintStyle:TextStyle(color: Colors.white60 , fontSize: 14), 
-         prefixIcon: Icon(Icons.business , color:Colors.white54),
+        decoration: textInputDeco.copyWith(hintText:"Nom Complete" , hintStyle:TextStyle(color: Colors.white60 , fontSize: 14), 
+         prefixIcon: Icon(Icons.face , color:Colors.white54),
         ),
         
-        validator: (value)=> value.isEmpty ? "Tapez Le Nom De Service " : null,
+        validator: (value)=> value.isEmpty ? "Tapez Le Nom Complete " : null,
         onChanged: (value)
         {
               setState(() {
-      dep = value;
+      name = value;
               });
         },
       ),
@@ -93,6 +94,7 @@ Widget _sendMail = Text('Add Service' , style: TextStyle(color:Colors.white));
                        if(_formKey.currentState.validate())
                   { 
                          setState(() {
+                         
                             _enabled = false;
                         _sendMail =
                          Loading(indicator: BallSpinFadeLoaderIndicator(), size: 30.0,color: Colors.white);
@@ -100,19 +102,18 @@ Widget _sendMail = Text('Add Service' , style: TextStyle(color:Colors.white));
                      
                      
 
-                     await DatabaseService().addDeprt(dep);
+                     await DatabaseService().updateAdminData(name ?? widget.userDat.fullName,widget.userDat.uid);
                          setState(() {
-                            _enabled = false;
                            _sendMail = Row(
                             
                              children: <Widget>[
-                               Text('Added' , style: TextStyle(color:Colors.white)),
+                               Text('Modifie' , style: TextStyle(color:Colors.white)),
                                SizedBox(width: 5),
-                               Icon(Icons.done_all , color: Colors.white,semanticLabel: "Added"),
+                               Icon(Icons.done_all , color: Colors.white,semanticLabel: "Modifie"),
                              ],
                            );
 
-                       
+                            
                          });
                      
                   }
@@ -125,7 +126,6 @@ Widget _sendMail = Text('Add Service' , style: TextStyle(color:Colors.white));
           )
           
           ),
-      ),
-    );
+      );
   }
 }

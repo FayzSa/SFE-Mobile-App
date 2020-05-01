@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sfe_mobile_app/models/mail_model.dart';
 import 'package:sfe_mobile_app/screens/home/admin/showReply.dart';
-import 'package:sfe_mobile_app/services/databaseService.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
 class ShowMailAdmin extends StatefulWidget {

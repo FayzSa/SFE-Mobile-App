@@ -16,17 +16,7 @@ class AuthService {
     return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
   }
 
-// Sing In Anonymosly
-  Future signInAnon() async {
-    try {
-      AuthResult rs = await _auth.signInAnonymously();
-      FirebaseUser user = rs.user;
-      return _userFromFirebaseUser(user);
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
+
   // sign with email and pass
 
 Future restPassword(String email)async{
@@ -47,6 +37,31 @@ Future restPassword(String email)async{
 
   //registre with email and pass
 
+  
+  
+  Future addUsers(
+      String email, String password, String dep, String fullName , bool isAdmin ,{String grade}) async {
+    try {
+      
+      AuthResult rs = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      FirebaseUser user = rs.user;
+      // Create Document of the user
+      if(isAdmin == true){
+        
+      await DatabaseService(uid: user.uid)
+          .initAdmin(fullName);
+      }
+      else{
+      await DatabaseService(uid: user.uid)
+          .initUserData(fullName, dep , isAdmin , grade: grade ?? "Pas Define");}
+     
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
   Future registreWithEmailAndPassword(
       String email, String password, String dep, String fullName , bool isAdmin) async {
     try {
@@ -54,6 +69,8 @@ Future restPassword(String email)async{
           email: email, password: password);
       FirebaseUser user = rs.user;
       // Create Document of the user
+    
+      
       await DatabaseService(uid: user.uid)
           .initUserData(fullName, dep , isAdmin);
       return _userFromFirebaseUser(user);

@@ -15,23 +15,28 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
+  Timer t ;
   Widget _page  = Loading();
   @override
   void initState() { 
     super.initState();
-    Timer(Duration(seconds: 10), (){
+    setState(() {
+    t = Timer(Duration(seconds:5), (){
       setState(() {
         _page = StreamProvider<List<Departs>>.value(
           value: DatabaseService().departments,
           child: Auth());
       });
+    });  
     });
+    
   }
 
   @override
   Widget build(BuildContext context) {
   
   final user = Provider.of<User>(context);
+  if(user != null) t.cancel();
     // set Page to Home or auth 
     return user == null ? _page : StreamProvider<List<Departs>>.value(
           value: DatabaseService().departments,

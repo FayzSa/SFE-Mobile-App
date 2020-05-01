@@ -12,14 +12,15 @@ class ListMails extends StatefulWidget {
   _ListMailsState createState() => _ListMailsState();
 }
 class _ListMailsState extends State<ListMails> {
-
+Timer t ;
   Widget toShowBefore  = Center (child: SpinKitCircle(
   color: Colors.black87,
   size: 50.0));
   @override
   void initState() { 
     super.initState();
-    Timer(Duration(seconds: 10), (){
+setState(() {
+t = Timer(Duration(seconds: 10), (){
       setState(() {
          toShowBefore = Center(child: Text("You Have No Email",style: TextStyle(
         color: Colors.black87,
@@ -28,12 +29,19 @@ class _ListMailsState extends State<ListMails> {
       });
      
     });
+  
+});
   }
   
 
    @override
   Widget build(BuildContext context) {
     final  emails = Provider.of<List<Email>>(context) ?? []; 
+    if(emails.length > 0){
+      setState(() {
+        t.cancel();
+      });
+    }
      return emails.length == 0 ? toShowBefore
      : ListView.builder(
        itemCount: emails.length,

@@ -5,7 +5,7 @@ class Loading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height,
-      color: Colors.black87,
+      color: Colors.black,
       child: Center(
         child: SpinKitChasingDots(
           color: Colors.white,

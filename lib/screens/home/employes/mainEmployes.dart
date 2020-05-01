@@ -22,10 +22,3 @@ class MainEmployes extends StatelessWidget {
     );
   }
 } 
-// Text(user.departement),
-           
-            
-       /*     RaisedButton(onPressed: () async{
-              Loading();
-              await AuthService().signOut();
-            }),*/

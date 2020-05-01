@@ -157,6 +157,7 @@ SizedBox(height: 40,),
                   { 
                          setState(() {
                            visiblity = false;
+                            _enabled = false;
                         _sendMail =
                          Loading(indicator: BallSpinFadeLoaderIndicator(), size: 30.0,color: Colors.white);
                       });
@@ -165,7 +166,6 @@ SizedBox(height: 40,),
 
                      await DatabaseService(uid: user.uid).sendRepaly(rep, _mailID, _files);
                          setState(() {
-                            _enabled = false;
                            _sendMail = Row(
                             
                              children: <Widget>[

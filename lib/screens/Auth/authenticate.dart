@@ -7,12 +7,14 @@ import 'package:sfe_mobile_app/shared/loading.dart';
 
 
 class Auth extends StatefulWidget {
+   final String error;
+  Auth({this.error});
   @override
   _AuthState createState() => _AuthState();
 }
 
 class _AuthState extends State<Auth> {
-
+ 
     bool showSignIn = true ; 
   void toggleView()
   {
@@ -26,7 +28,7 @@ class _AuthState extends State<Auth> {
   departs.removeWhere((item) => item.departsName == 'Tous');
   if(showSignIn)
     {
-      return Scaffold(body: SingleChildScrollView(child: SafeArea(child: SignIn(toggleView : toggleView))));
+      return Scaffold(body: SingleChildScrollView(child: SafeArea(child: SignIn(toggleView : toggleView , error:widget.error))));
     }
     else{ 
       if(departs.length == 0 ){return Loading();}

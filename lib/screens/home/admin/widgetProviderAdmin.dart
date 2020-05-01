@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sfe_mobile_app/models/mail_model.dart';
 import 'package:sfe_mobile_app/screens/home/admin/mainAdmin.dart';
 import 'package:sfe_mobile_app/screens/home/admin/sendMail.dart';
+import 'package:sfe_mobile_app/screens/home/admin/settings.dart';
 import 'package:sfe_mobile_app/services/authService.dart';
 import 'package:sfe_mobile_app/shared/loading.dart';
 
@@ -35,7 +36,7 @@ Widget _showPage = MainAdmin();
   Widget _choosenPage(int index){
      if(index == 0) return MainAdmin();
      //if(index == 1) return _SendNewMail;
-     //if(index == 2) return _;
+     if(index == 2) return Settings();
      //if(index == 3) return _aboutDe;
      else {
        return Scaffold(
@@ -52,7 +53,7 @@ Widget _showPage = MainAdmin();
 
   @override
   Widget build(BuildContext context) {
-    
+
     final departs =Provider.of<List<Departs>>(context) ?? [];
    return Scaffold(
            floatingActionButton: FloatingActionButton(
@@ -76,8 +77,8 @@ Widget _showPage = MainAdmin();
             Icon(Icons.exit_to_app, size: 25,color: Colors.white),
             
             ],
-          color: Colors.black87,
-          buttonBackgroundColor: Colors.black87,
+          color: Colors.black,
+          buttonBackgroundColor: Colors.black,
           backgroundColor: Colors.white,
           animationCurve: Curves.easeInOut,
           animationDuration: Duration(milliseconds: 600),
@@ -92,6 +93,9 @@ Widget _showPage = MainAdmin();
             }
           
             setState(() {
+              if(index == 0) _headerText = "All Mails";
+              if(index == 1) _headerText = "Filters";
+              if(index == 2) _headerText = "Settings";
               _showPage = _choosenPage(index);
             });
              
@@ -105,7 +109,7 @@ Widget _showPage = MainAdmin();
                   height: MediaQuery.of(context).size.height/7,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.black87,
+                    color: Colors.black,
                      borderRadius: 
                      BorderRadius.only(bottomLeft: Radius.circular(0) ,bottomRight: Radius.circular(80) ),
                   

@@ -24,12 +24,27 @@ class DatabaseService
     
     
     //init or Update  User Data     
-  Future initUserData(String fullName , String department ,bool isAdmin)async
+  Future initUserData(String fullName , String department ,bool isAdmin , {String grade})async
   {
         return await mailGest.document(uid).setData({
         'Departement':department,
         'FullName':fullName,
         'isAdmin': isAdmin, 
+        "Grade":grade ?? "Pas Define"
+
+       });
+  } 
+
+
+  // init Admin 
+
+     //init or Update  User Data     
+  Future initAdmin(String fullName)async
+  {
+        return await mailGest.document(uid).setData({
+        'FullName':fullName,
+        'isAdmin': true, 
+
        });
   } 
 
@@ -41,6 +56,7 @@ class DatabaseService
      departement: snapshot.data['Departement'],
      fullName: snapshot.data['FullName'],
      isAdmin: snapshot.data['isAdmin'],
+  
     );
   }
 
@@ -137,6 +153,7 @@ updateTraited(Email em)async
   // stream of emails :
     Stream<List<Email>> get allEmails
   {   
+
     Stream<QuerySnapshot> allEmails = emailsGest.orderBy("DateRecive",descending: true).snapshots();
       updateTraite(allEmails);
        return allEmails.map(_mailListFormSnapshot);
@@ -245,7 +262,7 @@ sendRepaly(RepEmail repEmail , String emailID, List<File> filesPaths)async
 
 //Departs from snapshot 
 
-    //User Data From Snapshots 
+    //List Departs From Snapshots 
     List<Departs> _departsFromSnapshot(QuerySnapshot snapshot)
   {
     return snapshot.documents.map((doc){
@@ -286,10 +303,82 @@ updateDeprt(String  depNew ,String depID) async{
 
 
 //Delete Users //{Disable} User
+disable(String uid)async{
+  
+  await mailGest.document(uid).delete();
 
+}
 
 //Update User only Admin 
 
+    //init or Update  User Data     
+  updateUserData(String fullName , String department ,bool isAdmin ,  String userID ,{String grade} )async
+  {
+         await mailGest.document(userID).updateData({
+        'Departement':department,
+        'FullName':fullName,
+        'isAdmin': isAdmin, 
+        "Grade":grade ?? "Pas Define"
+
+       });
+  } 
+
+
+ Future updateAdminData(String fullName, String userID )async
+  {
+    
+        await mailGest.document(userID).updateData({
+        'FullName':fullName,
+       });
+  } 
+
+
+
+// All Admins 
+
+ //User Data From Snapshots 
+    List<UserData> _adminsFromSnapshot(QuerySnapshot snapshot)
+  {
+    return snapshot.documents.map((doc){
+      return UserData(
+        uid: doc.documentID,
+        fullName:doc.data["FullName"] ?? "Unknown",
+      );
+    }).toList();
+  }
+
+
+    List<UserData> _usersFromSnapshot(QuerySnapshot snapshot)
+  {
+    return snapshot.documents.map((doc){
+      return UserData(
+        uid: doc.documentID,
+        fullName:doc.data["FullName"] ?? "Unknown",
+        departement: doc.data['Departement'],
+        grade: doc.data['Grade'] ?? "Pas Define"
+
+      );
+    }).toList();
+  }
+
+
+
+
+  //Stream of all Admin
+  Stream<List<UserData>> get admins
+  {
+    return mailGest.where("isAdmin",isEqualTo: true).snapshots()
+    .map(_adminsFromSnapshot);
+   }
+
+
+
+  //Stream of all Users
+    Stream<List<UserData>> get users
+  {
+    return mailGest.where("isAdmin",isEqualTo: false).snapshots()
+    .map(_usersFromSnapshot);
+   }
 
 
 }

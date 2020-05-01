@@ -4,8 +4,9 @@ import 'package:sfe_mobile_app/shared/loading.dart';
 import 'package:sfe_mobile_app/shared/shared.dart';
 
 class SignIn extends StatefulWidget {
+  final String error;
    final Function toggleView;
-  SignIn({this.toggleView});
+  SignIn({this.toggleView, this.error});
   @override
   _SignInState createState() => _SignInState();
 }
@@ -27,6 +28,12 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
+    if(widget.error!=null)
+    {
+      setState(() {
+        error = widget.error;
+      });
+    }
     return isLoaded ? Loading() : Container(      
           
         child: Column(

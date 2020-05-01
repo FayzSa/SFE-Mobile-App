@@ -13,10 +13,10 @@ class UserData
 {
 
   final String uid,fullName,departement;
-  final bool isAdmin;
-  List<Email> recivedMails; 
-  List emailsList;
-  UserData({this.uid,this.fullName,this.departement,this.isAdmin , this.recivedMails , this.emailsList}); 
+  final bool isAdmin ;
+  String grade;
+  bool disabled;
+  UserData({this.uid,this.fullName,this.departement,this.isAdmin , this.grade , this.disabled}); 
   
 }
 

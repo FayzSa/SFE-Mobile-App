@@ -180,56 +180,59 @@ Padding(
           },
         ),
                ),
-       Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: <Widget>[
-                Align(
-          
-          alignment: Alignment.topLeft,
-                  child: Text('Service' , style: TextStyle(
-            color:Colors.white70,
-            fontSize: 12
-          ),),
-        ),
-         SizedBox(height: 3),
-         Container(
-           decoration: BoxDecoration(
-             color: Colors.white
-           ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: DropdownButtonFormField(
-                   validator: (val)=> val == null ?  "Please Choose a Service " : null,
-              
-                  
+       Visibility(
+         visible: visiblity,
+                child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: <Widget>[
+                  Align(
             
-                  
-                // style:TextStyle(color: Colors.white70),
-                  hint:  Text("Please Choose a Department" , style:TextStyle(color: Colors.black87)),
-                  value: departement ,
-                  items: 
-                  widget.departs.map((s){
-                      return DropdownMenuItem(
-                        value: s.departsName.toString(),
-                        child: new Text("${s.departsName}", ),
-                        );
-                  }).toList(), 
-                  onChanged: 
-                  (val) {
-                      setState(() {
-                        departement=val;
-                         print(departement.toString());
-                      });
-                  },
-                  
-                  
-                  ),
-                    ),
-         ),
-            ],
+            alignment: Alignment.topLeft,
+                    child: Text('Service' , style: TextStyle(
+              color:Colors.white70,
+              fontSize: 12
+            ),),
           ),
-        ),
+           SizedBox(height: 3),
+           Container(
+             decoration: BoxDecoration(
+               color: Colors.white
+             ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: DropdownButtonFormField(
+                     validator: (val)=> val == null ?  "Please Choose a Service " : null,
+                
+                    
+              
+                    
+                  // style:TextStyle(color: Colors.white70),
+                    hint:  Text("Please Choose a Department" , style:TextStyle(color: Colors.black87)),
+                    value: departement ,
+                    items: 
+                    widget.departs.map((s){
+                        return DropdownMenuItem(
+                          value: s.departsName.toString(),
+                          child: new Text("${s.departsName}", ),
+                          );
+                    }).toList(), 
+                    onChanged: 
+                    (val) {
+                        setState(() {
+                          departement=val;
+                           print(departement.toString());
+                        });
+                    },
+                    
+                    
+                    ),
+                      ),
+           ),
+              ],
+            ),
+          ),
+       ),
     
         SizedBox(height: 20,),
         ButtonBar(
@@ -246,13 +249,13 @@ Padding(
                   { 
                          setState(() {
                            visiblity = false;
+                            _enabled = false;
                         _sendMail =
                          Loading(indicator: BallSpinFadeLoaderIndicator(), size: 30.0,color: Colors.white);
                       });
                       Email email = Email(body: _body , dateRecive: _dateTime.toString() , title:_title , delay: del , department: departement,files: _files, repEmail: repEmail,traited: traited); 
                      await DatabaseService().sendMail( _files,email, departement);
                          setState(() {
-                            _enabled = false;
                            _sendMail = Row(
                             
                              children: <Widget>[
@@ -262,7 +265,7 @@ Padding(
                              ],
                            );
                          });
-                    Navigator.pop(context);
+                    
                   }
                     },
                   )

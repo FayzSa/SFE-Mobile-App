@@ -9,12 +9,8 @@ class MainAdmin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //All mails 
-    return StreamProvider<List<Email>>.value(
-      value: DatabaseService().allEmails,
-      child: Container(
-        child: ListAllMails(),
-      ),
-      
+    return Container(
+      child: ListAllMails(),
     );
   }
 }

@@ -2,39 +2,43 @@ import "package:flutter/material.dart";
 import 'package:loading/indicator/ball_spin_fade_loader_indicator.dart';
 import 'package:loading/loading.dart';
 import 'package:sfe_mobile_app/models/mail_model.dart';
-import 'package:sfe_mobile_app/services/authService.dart';
+import 'package:sfe_mobile_app/models/user_model.dart';
+import 'package:sfe_mobile_app/services/databaseService.dart';
 import 'package:sfe_mobile_app/shared/shared.dart';
-class AddEmp extends StatefulWidget {
+class ShowEmp extends StatefulWidget {
   final List<Departs> deparemtens ;
-  AddEmp({this.deparemtens});
+  final UserData userData;
+  ShowEmp({this.deparemtens , this.userData});
 
   @override
-  _AddEmpState createState() => _AddEmpState();
+  _ShowEmpState createState() => _ShowEmpState();
 }
 
-class _AddEmpState extends State<AddEmp> {
+class _ShowEmpState extends State<ShowEmp> {
 
-  
+   
   final _formkey = GlobalKey<FormState>();
 
   // Email filed 
-  String email = '';
-  String password = '';
-  String name = "";
-  String depart ;
-  String grade = "";
+  String name ;
+ 
+  String grade ;
   String error= '';
   bool _enabled = true;
 
   final _formKey = GlobalKey<FormState>();
 
 
-    Widget _sendMail = Text('Add Personel' , style: TextStyle(color:Colors.white));
+    Widget _sendMail = Text('Modifer Personel' , style: TextStyle(color:Colors.white));
 
   
   @override
   Widget build(BuildContext context) {
-widget.deparemtens.removeWhere((item) => item.departsName == 'Tous');
+  
+    List<Departs> departs = widget.deparemtens;
+  departs.removeWhere((item) => item.departsName == 'Tous');
+  String depart = widget.userData.departement;
+
       return SingleChildScrollView(
       child: Container(
        
@@ -62,7 +66,7 @@ widget.deparemtens.removeWhere((item) => item.departsName == 'Tous');
                         child: Column(
                           children: <Widget>[
                             Center(
-                              child: Text("Ajouter Personel" ,style: TextStyle(
+                              child: Text("Modifier Personel" ,style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 23
@@ -79,7 +83,7 @@ widget.deparemtens.removeWhere((item) => item.departsName == 'Tous');
                Padding(
                  padding: const EdgeInsets.all(10.0),
                  child: TextFormField(
-                   
+                   initialValue: widget.userData.fullName ?? "Unknown",
         enabled: _enabled,
         style: TextStyle(color:Colors.white70),
         decoration: textInputDeco.copyWith(hintText:"Nom Complete" , hintStyle:TextStyle(color: Colors.white60 , fontSize: 14), 
@@ -102,9 +106,10 @@ widget.deparemtens.removeWhere((item) => item.departsName == 'Tous');
                  child: TextFormField(
                    
         enabled: _enabled,
+        initialValue: widget.userData.grade ?? "Unknown",
         style: TextStyle(color:Colors.white70),
         decoration: textInputDeco.copyWith(hintText:"Grade" , hintStyle:TextStyle(color: Colors.white60 , fontSize: 14), 
-         prefixIcon: Icon(Icons.grade , color:Colors.white54),
+         prefixIcon: Icon(Icons.grade, color:Colors.white54),
         ),
         
         validator: (value)=> value.isEmpty ? "Tapez Le Grade " : null,
@@ -117,51 +122,7 @@ widget.deparemtens.removeWhere((item) => item.departsName == 'Tous');
       ),
                ),
 SizedBox(height: 10,),
-             Padding(
-               padding: const EdgeInsets.all(10.0),
-               child: TextFormField(
-                 
-        enabled: _enabled,
-        style: TextStyle(color:Colors.white70),
-        decoration: textInputDeco.copyWith(hintText:"E-Mail" , hintStyle:TextStyle(color: Colors.white60 , fontSize: 14), 
-         prefixIcon: Icon(Icons.mail , color:Colors.white54),
-        ),
-        
-        validator: (value)=> value.isEmpty ? "Entre an email " : null,
-        onChanged: (value)
-        {
-              setState(() {
-      email = value;
-              });
-        },
-      ),
-             ),
-
-
-
-             Padding(
-               padding: const EdgeInsets.all(10.0),
-               child: TextFormField(
-         
-        style: TextStyle(color:Colors.white70 ,fontSize: 17),
-        decoration:  textInputDeco.copyWith(hintText:"Password" , hintStyle:TextStyle(color:Colors.white60,fontSize: 14) , 
-         prefixIcon: Icon(Icons.lock , color:Colors.white54),
-        ),
-           
-        enabled: _enabled,
-        validator: (value) => value.length < 6 ? "Entre an password with more than 6 chars " : null,
-        obscureText: true,
-        onChanged: (value)
-        {
-      setState(() {
-        password = value;
-      });
-        },
-      ),
-             ),
-
-   SizedBox(height: 10,),
-
+          
 
 
 
@@ -186,12 +147,13 @@ SizedBox(height: 10,),
                       padding: const EdgeInsets.all(10.0),
                       child: Visibility(
                         visible: _enabled,
-                   child: DropdownButtonFormField(
+                        child: DropdownButtonFormField(
+                          
                    validator: (val)=> val == null ?  "Please Choose a Service " : null,
                   hint:  Text("Please Choose a Service" , style:TextStyle(color: Colors.black87)),
-                  value: depart,
+                  value: depart ?? (widget.userData.departement ?? " ") ,
                   items: 
-                  widget.deparemtens.map((s){
+                  departs.map((s){
                         return DropdownMenuItem(
                           value: s.departsName.toString(),
                           child: new Text("${s.departsName}", ),
@@ -201,7 +163,7 @@ SizedBox(height: 10,),
                   (val) {
                         setState(() {
                           depart=val.toString();
-                          
+                           print(depart.toString());
                         });
                   },
                   
@@ -215,7 +177,6 @@ SizedBox(height: 10,),
         ),
     
      
-     
         SizedBox(height: 10,),
         ButtonBar(
           children: <Widget>[
@@ -226,24 +187,27 @@ SizedBox(height: 10,),
                        if(_formKey.currentState.validate())
                   { 
                          setState(() {
-                         
-                            _enabled = false;
+                          _enabled = false;
                         _sendMail =
                          Loading(indicator: BallSpinFadeLoaderIndicator(), size: 30.0,color: Colors.white);
                       });
                      
                      
 
-                     await AuthService().addUsers(email, password, depart ,name, false, grade:grade);
+                     await DatabaseService().updateUserData(name ?? widget.userData.fullName, depart ?? widget.userData, false, widget.userData.uid , grade: grade ?? widget.userData.grade);
                          setState(() {
+                            _enabled = false;
                            _sendMail = Row(
                             
                              children: <Widget>[
-                               Text('Added' , style: TextStyle(color:Colors.white)),
+                               Text('Modifie' , style: TextStyle(color:Colors.white)),
                                SizedBox(width: 5),
-                               Icon(Icons.done_all , color: Colors.white,semanticLabel: "Added"),
+                               Icon(Icons.done_all , color: Colors.white,semanticLabel: "Modifie"),
+                               
                              ],
+                             
                            );
+                           
                          });
                      
                   }
