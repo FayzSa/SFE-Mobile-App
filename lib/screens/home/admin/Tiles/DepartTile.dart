@@ -56,6 +56,8 @@ class DepartTile extends StatelessWidget {
                                        height: MediaQuery.of(context).size.height/8,                       
                           color: Colors.black,
                           child: Column(
+                             mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                            children: <Widget>[
                             Center(
                              child:Text("Are You Sure ?",style:TextStyle(

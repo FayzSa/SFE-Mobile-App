@@ -43,8 +43,8 @@ class _SignInState extends State<SignIn> {
               width: double.infinity,
                 decoration: BoxDecoration(
           
-          image: DecorationImage(image: new AssetImage("assets/images/undraw_messenger_e7iu.png"),
-          fit: BoxFit.fill,
+          image: DecorationImage(image: new AssetImage("assets/images/login.png"),
+          fit: BoxFit.contain,
           ),
         ),
             ),

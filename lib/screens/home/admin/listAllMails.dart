@@ -45,6 +45,7 @@ class _ListAllMailsState extends State<ListAllMails> {
       }
    return allEmails.length == 0 ? toShowBefore
      : ListView.builder(
+       shrinkWrap: true,
        itemCount: allEmails.length,
        itemBuilder: (context ,index)
        {

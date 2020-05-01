@@ -52,18 +52,23 @@ String _headerText = "All Mails";
             Icon(Icons.cancel, size: 25,color: Colors.white),
             Icon(Icons.exit_to_app, size: 25,color: Colors.white),
             ],
-          color: Colors.black87,
+          color: Colors.black,
           buttonBackgroundColor: Colors.black,
           backgroundColor: Colors.white,
           animationCurve: Curves.easeInOut,
           animationDuration: Duration(milliseconds: 600),
-          onTap: (index){
+          onTap: (index)async{
             if(index == 3){
-              setState(() async{
-              _showPage =  Loading();
-              await AuthService().signOut();
-                
+             
+                setState((){
+            // _showPage =  Loading();
               });
+               await AuthService().signOut();
+             // _showPage =  Loading();
+             
+              
+                
+              
             }
             setState(() {
               if(index == 0) _headerText = "All Mails";

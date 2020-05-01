@@ -39,13 +39,14 @@ Future restPassword(String email)async{
 
   
   
-  Future addUsers(
+   addUsers(
       String email, String password, String dep, String fullName , bool isAdmin ,{String grade}) async {
     try {
       
       AuthResult rs = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      FirebaseUser user = rs.user;
+         
+          FirebaseUser user = rs.user;
       // Create Document of the user
       if(isAdmin == true){
         

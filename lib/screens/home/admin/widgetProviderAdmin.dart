@@ -2,6 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sfe_mobile_app/models/mail_model.dart';
+import 'package:sfe_mobile_app/screens/home/admin/filter.dart';
 import 'package:sfe_mobile_app/screens/home/admin/mainAdmin.dart';
 import 'package:sfe_mobile_app/screens/home/admin/sendMail.dart';
 import 'package:sfe_mobile_app/screens/home/admin/settings.dart';
@@ -35,7 +36,7 @@ String _headerText = "All Mails";
 Widget _showPage = MainAdmin();
   Widget _choosenPage(int index){
      if(index == 0) return MainAdmin();
-     //if(index == 1) return _SendNewMail;
+     if(index == 1) return Filters();
      if(index == 2) return Settings();
      //if(index == 3) return _aboutDe;
      else {
@@ -82,14 +83,14 @@ Widget _showPage = MainAdmin();
           backgroundColor: Colors.white,
           animationCurve: Curves.easeInOut,
           animationDuration: Duration(milliseconds: 600),
-          onTap: (index) {
+          onTap: (index) async{
             
             if(index == 3){
-              setState(() async{
-              _showPage =  Loading();
-              await AuthService().signOut();
-                
+                setState(() {
+            // _showPage =  Loading();
               });
+               await AuthService().signOut();
+            
             }
           
             setState(() {

@@ -381,4 +381,43 @@ disable(String uid)async{
    }
 
 
+
+
+
+// Filters
+
+    Stream<List<Email>> get allEmailsNonTraited
+  {   
+
+    Stream<QuerySnapshot> allEmails = emailsGest.where("Traited",isEqualTo:"Not Traited" ).orderBy("DateRecive",descending: true).snapshots();
+      updateTraite(allEmails);
+       return allEmails.map(_mailListFormSnapshot);
+      
+  }
+
+    Stream<List<Email>> get allEmailsTraited
+  {   
+
+    Stream<QuerySnapshot> allEmails = emailsGest.
+    where("Traited",isEqualTo : "Traited" )
+    .orderBy("DateRecive",descending: true)
+    .snapshots();
+     updateTraite(allEmails);
+       return allEmails.map(_mailListFormSnapshot);
+      
+  }
+
+
+    Stream<List<Email>> get allEmailsStill
+  {   
+
+    Stream<QuerySnapshot> allEmails = emailsGest.
+    where("Traited",isEqualTo : "Still" )
+    .orderBy("DateRecive",descending: true)
+    .snapshots();
+     updateTraite(allEmails);
+       return allEmails.map(_mailListFormSnapshot);
+      
+  }
+
 }

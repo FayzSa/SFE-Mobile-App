@@ -20,7 +20,7 @@ class _WrapperState extends State<Wrapper> {
   @override
   void initState() { 
     super.initState();
-    setState(() {
+   
     t = Timer(Duration(seconds:5), (){
       setState(() {
         _page = StreamProvider<List<Departs>>.value(
@@ -28,7 +28,7 @@ class _WrapperState extends State<Wrapper> {
           child: Auth());
       });
     });  
-    });
+  
     
   }
 

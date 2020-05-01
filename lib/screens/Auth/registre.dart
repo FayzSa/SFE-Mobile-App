@@ -47,8 +47,8 @@ void initState() {
             width: double.infinity,
               decoration: BoxDecoration(
         
-        image: DecorationImage(image: new AssetImage("assets/images/undraw_messenger_e7iu.png"),
-        fit: BoxFit.fill,
+        image: DecorationImage(image: new AssetImage("assets/images/registre.png"),
+        fit: BoxFit.contain,
         ),
       ),
           ),

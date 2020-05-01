@@ -28,7 +28,9 @@ class _AuthState extends State<Auth> {
   departs.removeWhere((item) => item.departsName == 'Tous');
   if(showSignIn)
     {
-      return Scaffold(body: SingleChildScrollView(child: SafeArea(child: SignIn(toggleView : toggleView , error:widget.error))));
+      return Scaffold(
+        body: Container(
+          child: SingleChildScrollView(child: SafeArea(child: SignIn(toggleView : toggleView , error:widget.error)))));
     }
     else{ 
       if(departs.length == 0 ){return Loading();}

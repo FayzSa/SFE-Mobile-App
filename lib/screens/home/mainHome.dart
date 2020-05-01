@@ -16,22 +16,11 @@ class HomeMain extends StatefulWidget {
 }
 
 class _HomeMainState extends State<HomeMain> {
-  Widget _page = Loading();
-  @override
-  void initState() { 
-    super.initState();
-    Timer(Duration(seconds: 10), (){
-
-        setState(() {
-          _page = Auth(error: "Could not sign in with those informations");
-        });
-
-    });
-  }
+ 
   @override
   Widget build(BuildContext context) {
      final userdata = Provider.of<UserData>(context); 
-   return userdata == null ? _page: 
+   return userdata == null ? Auth(): 
       StreamProvider<List<Email>>.value(
       value: DatabaseService().allEmails,
         child: userdata.isAdmin ? WdigetProviderAdmin() : WidgetProvider() ,
