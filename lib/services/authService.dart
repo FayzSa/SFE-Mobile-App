@@ -4,6 +4,7 @@ import 'package:sfe_mobile_app/services/databaseService.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _authAdd = FirebaseAuth.instance;  
 
 // create userObj base on firebase user
   User _userFromFirebaseUser(FirebaseUser user) {
@@ -39,29 +40,7 @@ Future restPassword(String email)async{
 
   
   
-   addUsers(
-      String email, String password, String dep, String fullName , bool isAdmin ,{String grade}) async {
-    try {
-      
-      AuthResult rs = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-         
-          FirebaseUser user = rs.user;
-      // Create Document of the user
-      if(isAdmin == true){
-        
-      await DatabaseService(uid: user.uid)
-          .initAdmin(fullName);
-      }
-      else{
-      await DatabaseService(uid: user.uid)
-          .initUserData(fullName, dep , isAdmin , grade: grade ?? "Pas Define");}
-     
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
+ 
 
   Future registreWithEmailAndPassword(
       String email, String password, String dep, String fullName , bool isAdmin) async {

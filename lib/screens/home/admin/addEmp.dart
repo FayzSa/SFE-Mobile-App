@@ -3,6 +3,7 @@ import 'package:loading/indicator/ball_spin_fade_loader_indicator.dart';
 import 'package:loading/loading.dart';
 import 'package:sfe_mobile_app/models/mail_model.dart';
 import 'package:sfe_mobile_app/services/authService.dart';
+import 'package:sfe_mobile_app/services/databaseService.dart';
 import 'package:sfe_mobile_app/shared/shared.dart';
 class AddEmp extends StatefulWidget {
   final List<Departs> deparemtens ;
@@ -234,7 +235,7 @@ SizedBox(height: 10,),
                      
                      
 
-                     await AuthService().addUsers(email, password, depart ,name, false, grade:grade);
+                     await DatabaseService().addUsers(email, password, depart ,name, false, grade:grade);
                          setState(() {
                            _sendMail = Row(
                             

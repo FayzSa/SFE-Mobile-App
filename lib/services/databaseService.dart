@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:path/path.dart' as path;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sfe_mobile_app/models/user_model.dart';
@@ -420,4 +421,37 @@ disable(String uid)async{
       
   }
 
+
+
+
+
+
+
+
+
+
+  addUsers(
+      String email, String password, String dep, String fullName , bool isAdmin ,{String grade}) async {
+    try {
+      
+      AuthResult rs = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: email, password: password
+          );
+         
+          FirebaseUser user = rs.user;
+      // Create Document of the user
+      if(isAdmin == true){
+        
+      await DatabaseService(uid: user.uid)
+          .initAdmin(fullName);
+      }
+      else{
+      await DatabaseService(uid: user.uid)
+          .initUserData(fullName, dep , isAdmin , grade: grade ?? "Pas Define");}
+     
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 }

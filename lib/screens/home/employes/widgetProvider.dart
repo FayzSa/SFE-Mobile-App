@@ -60,14 +60,9 @@ String _headerText = "All Mails";
           onTap: (index)async{
             if(index == 3){
              
-                setState((){
-            // _showPage =  Loading();
-              });
+         
                await AuthService().signOut();
-             // _showPage =  Loading();
-             
-              
-                
+    
               
             }
             setState(() {

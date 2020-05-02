@@ -8,7 +8,7 @@
          <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="sfe_mobile_app"
+        android:label="Gestion Courrier"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

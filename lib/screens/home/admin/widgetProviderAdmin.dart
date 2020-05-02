@@ -86,9 +86,7 @@ Widget _showPage = MainAdmin();
           onTap: (index) async{
             
             if(index == 3){
-                setState(() {
-            // _showPage =  Loading();
-              });
+             
                await AuthService().signOut();
             
             }

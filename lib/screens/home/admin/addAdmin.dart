@@ -3,6 +3,7 @@ import 'package:loading/indicator/ball_spin_fade_loader_indicator.dart';
 import 'package:loading/loading.dart';
 import 'package:sfe_mobile_app/screens/Auth/authenticate.dart';
 import 'package:sfe_mobile_app/services/authService.dart';
+import 'package:sfe_mobile_app/services/databaseService.dart';
 import 'package:sfe_mobile_app/shared/shared.dart';
 class AddAdmin extends StatefulWidget {
   @override
@@ -152,7 +153,7 @@ SizedBox(height: 10,),
                      
                      
 
-                     await AuthService().addUsers(email, password, null, name, true);
+                     await DatabaseService().addUsers(email, password, null, name, true);
                          setState(() {
                             _enabled = false;
                            _sendMail = Row(
