@@ -1,8 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:loading/indicator/ball_spin_fade_loader_indicator.dart';
 import 'package:loading/loading.dart';
-import 'package:sfe_mobile_app/screens/Auth/authenticate.dart';
-import 'package:sfe_mobile_app/services/authService.dart';
 import 'package:sfe_mobile_app/services/databaseService.dart';
 import 'package:sfe_mobile_app/shared/shared.dart';
 class AddAdmin extends StatefulWidget {
@@ -58,6 +56,7 @@ Widget fs ;
                         padding: const EdgeInsets.all(5.0),
                         child: Column(
                           children: <Widget>[
+                            SizedBox(height: 20,),
                             Center(
                               child: Text("Ajouter Admin" ,style: TextStyle(
                                 color: Colors.white,
@@ -151,9 +150,8 @@ SizedBox(height: 10,),
                          Loading(indicator: BallSpinFadeLoaderIndicator(), size: 30.0,color: Colors.white);
                       });
                      
-                     
-
-                     await DatabaseService().addUsers(email, password, null, name, true);
+                     try {
+                       await DatabaseService().addUsers(email, password, null, name, true);
                          setState(() {
                             _enabled = false;
                            _sendMail = Row(
@@ -165,6 +163,22 @@ SizedBox(height: 10,),
                              ],
                            );
                          });
+                     
+                       
+                     } catch (e) {
+                                 setState(() {
+                            _enabled = false;
+                           _sendMail = Row(
+                            
+                             children: <Widget>[
+                               Text('Can not Add' , style: TextStyle(color:Colors.red)),
+                               SizedBox(width: 5),
+                               Icon(Icons.cancel , color: Colors.red,semanticLabel: "Added"),
+                             ],
+                           );
+                         });
+                     }
+
                      
                   }
                     },

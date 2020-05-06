@@ -7,51 +7,18 @@ import 'package:sfe_mobile_app/services/databaseService.dart';
 
 class AdminTile extends StatelessWidget {
   final UserData admin;
-  AdminTile({this.admin});
+  final uid;
+  AdminTile({this.admin , this.uid});
   @override
   Widget build(BuildContext context) {
     /*
     
      */
-    return Container(
-      padding: EdgeInsets.all(10.0),
-      child: Column(
-        children: <Widget>[
-          Row(
-                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                        
-                                        Row(
-                                          children: <Widget>[
-                                              Icon(Icons.person_outline, size: 18,),
-                                                SizedBox(width: 10),
-                                            Text(admin.fullName ,style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 15,
-                                      ),
-                                      ),
-                                          ],
-                                        ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              IconButton(icon: Icon(Icons.edit, size: 15,), onPressed: (){
+    Widget delete = SizedBox(width: 0,);
 
-                                  showModalBottomSheet(context: context, builder: (context)
-                                  {
-                                    return Scaffold(
-                                      backgroundColor: Colors.black,
-                                      body: SingleChildScrollView(child: ModiferAdmin(userDat: admin,)
-                                      
-                                      )
-                                      );
-                                  });
-
-
-                              }),
-                          IconButton(icon: Icon(Icons.delete, size: 15,), onPressed: (){
+    if(admin.uid != uid)
+    {
+        delete =    IconButton(icon: Icon(Icons.delete, size: 15,), onPressed: (){
                             showModalBottomSheet(context: context, builder: (context)
                               {
                                 return Container(
@@ -101,8 +68,48 @@ class AdminTile extends StatelessWidget {
                               });
                                                 
                            // 
-                          }
-                          )
+                          });
+    }
+    return Container(
+      padding: EdgeInsets.all(10.0),
+      child: Column(
+        children: <Widget>[
+          Row(
+                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                        
+                                        Row(
+                                          children: <Widget>[
+                                              Icon(Icons.person_outline, size: 18,),
+                                                SizedBox(width: 10),
+                                            Text(admin.fullName ,style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 15,
+                                      ),
+                                      ),
+                                          ],
+                                        ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              IconButton(icon: Icon(Icons.edit, size: 15,), onPressed: (){
+
+                                  showModalBottomSheet(context: context, builder: (context)
+                                  {
+                                    return Scaffold(
+                                      backgroundColor: Colors.black,
+                                      body: SingleChildScrollView(child: ModiferAdmin(userDat: admin,)
+                                      
+                                      )
+                                      );
+                                  });
+
+
+                              }),
+                            delete,
+                          
                             ],
                           ),
                                       ],

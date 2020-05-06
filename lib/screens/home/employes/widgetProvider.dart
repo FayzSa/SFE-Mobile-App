@@ -2,10 +2,12 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sfe_mobile_app/models/user_model.dart';
+import 'package:sfe_mobile_app/screens/Auth/authenticate.dart';
 import 'package:sfe_mobile_app/screens/home/employes/mainEmployes.dart';
 import 'package:sfe_mobile_app/screens/home/employes/nonTraited.dart';
 import 'package:sfe_mobile_app/screens/home/employes/traitedMails.dart';
 import 'package:sfe_mobile_app/services/authService.dart';
+import 'package:sfe_mobile_app/services/notificationservice.dart';
 import 'package:sfe_mobile_app/shared/loading.dart';
 
 
@@ -16,6 +18,14 @@ class WidgetProvider extends StatefulWidget {
 
 class _WidgetProviderState extends State<WidgetProvider> {
 
+ GestionNotification gn = new GestionNotification();
+  @override
+ initState(){
+   super.initState();
+   ///with these tow lines we add the employer to a topic for receiving messages 
+   String departement = Provider.of<UserData>(context,listen: false).departement;
+  gn.addtotopic(departement);
+ }
 
 String _headerText = "All Mails";
 
@@ -28,7 +38,7 @@ String _headerText = "All Mails";
      if(index == 0) return MainEmployes();
      if(index == 1) return TraitedMails();
      if(index == 2) return NonTraited();
-     //if(index == 3) return _aboutDev;
+     if(index == 3) return MainEmployes();
      else {
        return 
          Container(
@@ -41,7 +51,7 @@ String _headerText = "All Mails";
   @override
   Widget build(BuildContext context) {
   final userdata = Provider.of<UserData>(context); 
-   return Scaffold(
+   return userdata == null ? Auth(): Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
           key: _bottomNavigationKey,
           index: 0,
@@ -61,7 +71,60 @@ String _headerText = "All Mails";
             if(index == 3){
              
          
-               await AuthService().signOut();
+              showModalBottomSheet(context: context, builder: (context)
+                              {
+                                return Container(
+                                       height: MediaQuery.of(context).size.height/8,                       
+                          color: Colors.black,
+                          child: Column(
+                            
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+
+                           children: <Widget>[
+                            Center(
+                             child:Text("Are You Sure ?",style:TextStyle(
+                              color: Colors.white,
+                               fontSize: 25,
+                                  )),
+                                   ),
+                                   Row(
+                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                     children: <Widget>[
+                                       FlatButton(onPressed: ()async{  
+                                                      setState(() {
+                                                        _showPage=Loading();
+                                                      });
+                                                      
+                                                        await AuthService().signOut();
+                                                      
+               
+                                         Navigator.pop(context);
+                                       }, 
+                             child:
+                             Text("Oui", style:TextStyle(
+                             color: Colors.white
+                              )
+                              )
+                              ),
+                                     FlatButton(onPressed: (){
+                                         Navigator.pop(context);
+                                       }, 
+                             child:
+                             Text("Non", style:TextStyle(
+                             color: Colors.white
+                              )
+                              )
+                              ),
+                                   ],
+                                   
+                                   )
+                               ],
+                                  )
+                               );
+                                
+                              });
+                           
     
               
             }

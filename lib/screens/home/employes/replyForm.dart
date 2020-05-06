@@ -163,8 +163,8 @@ SizedBox(height: 40,),
                       });
                       RepEmail rep = RepEmail(body: _body , dateRep: _dateTime.toString() , title:_title); 
                      
-
-                     await DatabaseService(uid: user.uid).sendRepaly(rep, _mailID, _files);
+                    try {
+                      await DatabaseService(uid: user.uid).sendRepaly(rep, _mailID, _files);
                          setState(() {
                            _sendMail = Row(
                             
@@ -175,6 +175,19 @@ SizedBox(height: 40,),
                              ],
                            );
                          });
+                    } catch (e) {
+                      setState(() {
+                           _sendMail = Row(
+                            
+                             children: <Widget>[
+                               Text('Can not Send' , style: TextStyle(color:Colors.red)),
+                               SizedBox(width: 5),
+                               Icon(Icons.cancel , color: Colors.red,semanticLabel: "Sent"),
+                             ],
+                           );
+                         });
+                    }
+                     
                       Navigator.pop(context);
                   }
                     },

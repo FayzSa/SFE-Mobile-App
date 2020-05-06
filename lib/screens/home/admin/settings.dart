@@ -14,6 +14,8 @@ class Settings extends StatelessWidget {
   Widget build(BuildContext context) {
 
   final services = Provider.of<List<Departs>>(context) ?? [];
+  
+  final UserData userAdmin = Provider.of<UserData>(context) ?? [];
   //
        void _addAdmin()
    {
@@ -24,7 +26,7 @@ class Settings extends StatelessWidget {
       value: DatabaseService().admins,
                       child: 
              
-             ListAllAdmins() ,
+             ListAllAdmins(uid:userAdmin.uid) ,
           );
           },
           fullscreenDialog: true,

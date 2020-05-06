@@ -16,12 +16,14 @@ final _formkey = GlobalKey<FormState>();
 String dep ;
 bool _enabled = true;
 final _formKey = GlobalKey<FormState>();
+String error = '';
 
 Widget _sendMail = Text('Add Service' , style: TextStyle(color:Colors.white));
-
+Widget _loading =  Loading(indicator: BallSpinFadeLoaderIndicator(), size: 30.0,color: Colors.white);
   
   @override
   Widget build(BuildContext context) {
+
       return SingleChildScrollView(
       child: Container(
        
@@ -83,22 +85,26 @@ Widget _sendMail = Text('Add Service' , style: TextStyle(color:Colors.white));
       ),
                ),
 
+
         SizedBox(height: 10,),
         ButtonBar(
           children: <Widget>[
-            
+            Text(error,style: TextStyle(
+              color:Colors.red[500]
+            ),),
               FlatButton(
                     child:  _sendMail,
                     onPressed: () async{
                        if(_formKey.currentState.validate())
                   { 
-                         setState(() {
+                          setState(() {
                             _enabled = false;
                         _sendMail =
-                         Loading(indicator: BallSpinFadeLoaderIndicator(), size: 30.0,color: Colors.white);
+                        Text(" ... ",style: TextStyle(color: Colors.white60 ),);
                       });
                      
-                     
+                     try {
+                 
 
                      await DatabaseService().addDeprt(dep);
                          setState(() {
@@ -114,8 +120,28 @@ Widget _sendMail = Text('Add Service' , style: TextStyle(color:Colors.white));
 
                        
                          });
+                       
+                     } catch (e) {
+                       
+
+                       setState(() {
+                            _enabled = false;
+                           _sendMail = Row(
+                            
+                             children: <Widget>[
+                               Text('Can not add' , style: TextStyle(color:Colors.red)),
+                               SizedBox(width: 5),
+                               Icon(Icons.cancel , color: Colors.red,semanticLabel: "Added"),
+                             ],
+                           );
+
+                       
+                         });
                      
-                  }
+                  
+
+                     }
+                       }
                     },
                   )
           ],

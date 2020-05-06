@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sfe_mobile_app/models/user_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:sfe_mobile_app/models/mail_model.dart';
-
+import 'package:sfe_mobile_app/services/notificationservice.dart';
 
 class DatabaseService 
 {
@@ -19,7 +19,7 @@ class DatabaseService
     final CollectionReference mailGest = Firestore.instance.collection('users');
     final CollectionReference emailsGest = Firestore.instance.collection('emails');
     final CollectionReference departGest = Firestore.instance.collection('Departments');
-
+    final GestionNotification gestionnotification = new GestionNotification();
     final StorageReference storageRef =
         FirebaseStorage.instance.ref();   
     
@@ -142,8 +142,7 @@ updateTraited(Email em)async
      Stream<QuerySnapshot> allEmails = 
         emailsGest.
         where("Department",isEqualTo:depRt).
-        where("Traited",whereIn : ["Not Traited" , "Still"]).
-        //where("Traited" , isEqualTo: "Still").
+        where("Traited",isEqualTo :"Not Traited").
         orderBy("DateRecive",descending: true).
         snapshots();
         updateTraite(allEmails);
@@ -174,7 +173,7 @@ updateTraited(Email em)async
  
 
 // send Mail
-  sendMail( List<File> filesPaths, Email em , String depart)async 
+  sendMail( List<File> filesPaths, Email em , String depart,String userid)async 
   {
     List<String> urlsLinks = await uploadFilesAdmins(filesPaths,em) ?? [];
    
@@ -186,11 +185,18 @@ updateTraited(Email em)async
           "DateRecive":em.dateRecive,
           "Traited":em.traited,
           "Delay":em.delay,
-          "Department":depart // Remove To Upper
+          "Department":depart,
+           "from" : userid  // Remove To Upper
           }
         );
+ ///save the token for replay notification from the employer
+  // to changer after
+   await gestionnotification.sendNotification('Email from : $depart','Email title : '+ em.title,topic: '$depart',);
+            print('your uid is  :  '+userid);
 
+    
   }
+
 
 
 // send Reply to an Email
@@ -210,6 +216,16 @@ sendRepaly(RepEmail repEmail , String emailID, List<File> filesPaths)async
       "ReplayMail":repE,
       "Traited": "Traited"
       });
+
+       ///send notification replay
+      ///
+      ///
+      /// 
+      DocumentSnapshot snpshot = await emailsGest.document(emailID).get();
+     String uidofsender = await snpshot.data['from'];
+      var tokenofsender = uidofsender !=null ? await gestionnotification.getTokenfromdatabase(uid: uidofsender):null;
+      await  gestionnotification.sendNotification(repEmail.title, repEmail.body,token : tokenofsender==null?'':tokenofsender);
+
 }
 
 // add files for Services
@@ -289,7 +305,21 @@ addDeprt(String depName) async{
   });
 }
 //Delete 
-delDeprt(String depID) async{
+delDeprt(String depID , String depName) async{
+
+  mailGest.where("Departement" , isEqualTo: depName).snapshots().listen((onData){
+    onData.documents.forEach((f) async{
+    //print("USER");
+      await mailGest.document(f.documentID).delete();
+    });
+  });
+
+ emailsGest.where("Department" , isEqualTo: depName).snapshots().listen((onData){
+    onData.documents.forEach((s) async{    
+     await emailsGest.document(s.documentID).delete();
+    });
+  });
+
   departGest.document(depID).delete();
 }
 //Update 
@@ -413,7 +443,7 @@ disable(String uid)async{
   {   
 
     Stream<QuerySnapshot> allEmails = emailsGest.
-    where("Traited",isEqualTo : "Still" )
+    where("Traited",isEqualTo : "Still")
     .orderBy("DateRecive",descending: true)
     .snapshots();
      updateTraite(allEmails);

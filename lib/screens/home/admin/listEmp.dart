@@ -18,15 +18,20 @@ class ListAllEmp extends StatefulWidget {
 class _ListAllEmpState extends State<ListAllEmp> {
    GlobalKey _bottomNavigationKey = GlobalKey();
 
-
- void _addUser()
+       void _addEmp()
    {
-      showModalBottomSheet(context: context, builder: (context)
-      {
-        return Scaffold(
+
+            Navigator.push(context, MaterialPageRoute<Null>(
+          builder: (BuildContext context) {
+   return Scaffold(
           backgroundColor: Colors.black,
-          body: SingleChildScrollView(child: AddEmp(deparemtens:widget.departs)));
-      });
+          body: SingleChildScrollView(child:AddEmp(deparemtens:widget.departs)));
+          },
+          fullscreenDialog: true,
+        ));
+
+
+    
    }
 String _headerText = "Personel";
 
@@ -53,7 +58,7 @@ String _headerText = "Personel";
           onTap: (index) {
          
             setState(() {
-            _addUser();
+            _addEmp();
             });
              
               },
@@ -115,9 +120,3 @@ String _headerText = "Personel";
   }
 }
 
-
-// filter to order by departments 
-// Show only Traited 
-// Show Only non traited 
-// Show only still 
-// Show Replyed on 

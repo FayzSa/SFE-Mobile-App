@@ -2,7 +2,6 @@ import "package:flutter/material.dart";
 import 'package:loading/indicator/ball_spin_fade_loader_indicator.dart';
 import 'package:loading/loading.dart';
 import 'package:sfe_mobile_app/models/mail_model.dart';
-import 'package:sfe_mobile_app/services/authService.dart';
 import 'package:sfe_mobile_app/services/databaseService.dart';
 import 'package:sfe_mobile_app/shared/shared.dart';
 class AddEmp extends StatefulWidget {
@@ -62,6 +61,8 @@ widget.deparemtens.removeWhere((item) => item.departsName == 'Tous');
                         padding: const EdgeInsets.all(5.0),
                         child: Column(
                           children: <Widget>[
+                            
+                            SizedBox(height: 20,),
                             Center(
                               child: Text("Ajouter Personel" ,style: TextStyle(
                                 color: Colors.white,
@@ -233,9 +234,8 @@ SizedBox(height: 10,),
                          Loading(indicator: BallSpinFadeLoaderIndicator(), size: 30.0,color: Colors.white);
                       });
                      
-                     
-
-                     await DatabaseService().addUsers(email, password, depart ,name, false, grade:grade);
+                     try {
+                       await DatabaseService().addUsers(email, password, depart ,name, false, grade:grade);
                          setState(() {
                            _sendMail = Row(
                             
@@ -246,6 +246,21 @@ SizedBox(height: 10,),
                              ],
                            );
                          });
+                     } catch (e) {
+                         setState(() {
+                           _sendMail = Row(
+                            
+                             children: <Widget>[
+                               Text('Can not Add' , style: TextStyle(color:Colors.red)),
+                               SizedBox(width: 5),
+                               Icon(Icons.cancel , color: Colors.red,semanticLabel: "Added"),
+                             ],
+                           );
+                         });
+
+                     }
+
+                     
                      
                   }
                     },

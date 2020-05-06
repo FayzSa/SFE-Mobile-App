@@ -36,7 +36,13 @@ class _WrapperState extends State<Wrapper> {
   Widget build(BuildContext context) {
   
   final user = Provider.of<User>(context);
-  if(user != null) t.cancel();
+    setState(() {
+  if(user != null) t.cancel(); 
+  
+    });
+
+  
+
     // set Page to Home or auth 
     return user == null ? _page : StreamProvider<List<Departs>>.value(
           value: DatabaseService().departments,

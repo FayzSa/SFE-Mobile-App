@@ -53,23 +53,34 @@ class DepartTile extends StatelessWidget {
                             showModalBottomSheet(context: context, builder: (context)
                               {
                                 return  Container(
-                                       height: MediaQuery.of(context).size.height/8,                       
+                                       height: MediaQuery.of(context).size.height/5,                       
                           color: Colors.black,
                           child: Column(
                              mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                            children: <Widget>[
-                            Center(
-                             child:Text("Are You Sure ?",style:TextStyle(
-                              color: Colors.white,
-                               fontSize: 25,
-                                )),
-                                 ),
+                            Column(
+                              children: <Widget>[
+                                SizedBox(height: 5,),
+                                Center(
+                                 child:Text("Are You Sure ?",style:TextStyle(
+                                  color: Colors.white,
+                                   fontSize: 25,
+                                    )),
+                                     ),
+                                      Center(
+                                 child:Text("If you delete this departement all emails and users in this department will be deleted ",style:TextStyle(
+                                  color: Colors.white60,
+                                   fontSize: 12,
+                                    )),
+                                     ),
+                              ],
+                            ),
                                  Row(
                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                    children: <Widget>[
                                      FlatButton(onPressed: ()async{
-                                       await DatabaseService().delDeprt(dep.departID);
+                                       await DatabaseService().delDeprt(dep.departID , dep.departsName);
                                        Navigator.pop(context);
                                      }, 
                              child:

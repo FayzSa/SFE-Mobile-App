@@ -2,11 +2,14 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sfe_mobile_app/models/mail_model.dart';
+import 'package:sfe_mobile_app/models/user_model.dart';
+import 'package:sfe_mobile_app/screens/Auth/authenticate.dart';
 import 'package:sfe_mobile_app/screens/home/admin/filter.dart';
 import 'package:sfe_mobile_app/screens/home/admin/mainAdmin.dart';
 import 'package:sfe_mobile_app/screens/home/admin/sendMail.dart';
 import 'package:sfe_mobile_app/screens/home/admin/settings.dart';
 import 'package:sfe_mobile_app/services/authService.dart';
+import 'package:sfe_mobile_app/services/notificationservice.dart';
 import 'package:sfe_mobile_app/shared/loading.dart';
 
 class WdigetProviderAdmin extends StatefulWidget {
@@ -15,6 +18,15 @@ class WdigetProviderAdmin extends StatefulWidget {
 }
 
 class _WdigetProviderAdminState extends State<WdigetProviderAdmin> {
+
+ @override
+  initState(){
+    super.initState();
+    ///after success sign in the gestionnotification  will save it in the database for recieving replayes from employes 
+     GestionNotification.saveTokeninthedatabase(uid: Provider.of<UserData>(context,listen: false).uid);
+  }
+
+
    GlobalKey _bottomNavigationKey = GlobalKey();
         void _sendMailPanel(List<Departs> dep)
    {
@@ -38,7 +50,7 @@ Widget _showPage = MainAdmin();
      if(index == 0) return MainAdmin();
      if(index == 1) return Filters();
      if(index == 2) return Settings();
-     //if(index == 3) return _aboutDe;
+     if(index == 3) return MainAdmin();
      else {
        return Scaffold(
          backgroundColor: Colors.white,
@@ -56,7 +68,8 @@ Widget _showPage = MainAdmin();
   Widget build(BuildContext context) {
 
     final departs =Provider.of<List<Departs>>(context) ?? [];
-   return Scaffold(
+  final userdata = Provider.of<UserData>(context); 
+   return userdata == null ? Auth(): Scaffold(
            floatingActionButton: FloatingActionButton(
              
         onPressed:(){
@@ -87,7 +100,65 @@ Widget _showPage = MainAdmin();
             
             if(index == 3){
              
-               await AuthService().signOut();
+
+               showModalBottomSheet(context: context, builder: (context)
+                              {
+                                return Container(
+                                       height: MediaQuery.of(context).size.height/8,                       
+                          color: Colors.black,
+                          child: Column(
+                            
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+
+                           children: <Widget>[
+                            Center(
+                             child:Text("Are You Sure ?",style:TextStyle(
+                              color: Colors.white,
+                               fontSize: 25,
+                                  )),
+                                   ),
+                                   Row(
+                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                     children: <Widget>[
+                                       FlatButton(onPressed: ()async{  
+
+                                          setState(() {
+                                                        _showPage=Loading();
+                                                      });
+                                                      
+                                                        await AuthService().signOut();
+                                                   
+               
+                                         Navigator.pop(context);
+                                       }, 
+                             child:
+                             Text("Oui", style:TextStyle(
+                             color: Colors.white
+                              )
+                              )
+                              ),
+                                     FlatButton(onPressed: (){
+                                         Navigator.pop(context);
+                                       }, 
+                             child:
+                             Text("Non", style:TextStyle(
+                             color: Colors.white
+                              )
+                              )
+                              ),
+                                   ],
+                                   
+                                   )
+                               ],
+                                  )
+                               );
+                                
+                              });
+                           
+
+
+
             
             }
           

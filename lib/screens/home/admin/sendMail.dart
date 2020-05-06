@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sfe_mobile_app/models/mail_model.dart';
+import 'package:sfe_mobile_app/models/user_model.dart';
 import 'package:sfe_mobile_app/services/databaseService.dart';
 import 'package:sfe_mobile_app/shared/shared.dart';
 import 'package:file_picker/file_picker.dart';
@@ -254,7 +255,9 @@ Padding(
                          Loading(indicator: BallSpinFadeLoaderIndicator(), size: 30.0,color: Colors.white);
                       });
                       Email email = Email(body: _body , dateRecive: _dateTime.toString() , title:_title , delay: del , department: departement,files: _files, repEmail: repEmail,traited: traited); 
-                     await DatabaseService().sendMail( _files,email, departement);
+                     try {
+                      await DatabaseService().sendMail( _files,email, departement,Provider.of<User>(context,listen : false).uid);
+                    
                          setState(() {
                            _sendMail = Row(
                             
@@ -266,7 +269,20 @@ Padding(
                            );
                          });
                     
-                  }
+  
+                     } catch (e) {
+                          setState(() {
+                           _sendMail = Row(
+                            
+                             children: <Widget>[
+                               Text('Can not send' , style: TextStyle(color:Colors.red)),
+                               SizedBox(width: 5),
+                               Icon(Icons.cancel , color: Colors.red,semanticLabel: "Sent"),
+                             ],
+                           );
+                         });
+                     }
+                                       }
                     },
                   )
           ],

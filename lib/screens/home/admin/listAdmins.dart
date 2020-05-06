@@ -2,11 +2,14 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sfe_mobile_app/models/user_model.dart';
+import 'package:sfe_mobile_app/screens/Auth/authenticate.dart';
 import 'package:sfe_mobile_app/screens/home/admin/Tiles/AdminTile.dart';
 import 'package:sfe_mobile_app/screens/home/admin/addAdmin.dart';
 
 
 class ListAllAdmins extends StatefulWidget {
+  final uid;
+  ListAllAdmins({this.uid});
  
   @override
   _ListAllAdminsState createState() => _ListAllAdminsState();
@@ -15,16 +18,22 @@ class ListAllAdmins extends StatefulWidget {
 class _ListAllAdminsState extends State<ListAllAdmins> {
    GlobalKey _bottomNavigationKey = GlobalKey();
 
-
- void _addAdmin()
+        void _addAdmin2()
    {
-      showModalBottomSheet(context: context, builder: (context)
-      {
-        return Scaffold(
+
+            Navigator.push(context, MaterialPageRoute<Null>(
+          builder: (BuildContext context) {
+   return Scaffold(
           backgroundColor: Colors.black,
           body: SingleChildScrollView(child: AddAdmin()));
-      });
+          },
+          fullscreenDialog: true,
+        ));
+
+
+    
    }
+
 String _headerText = "Admins";
 
   
@@ -32,7 +41,8 @@ String _headerText = "Admins";
   @override
   Widget build(BuildContext context) {
 
-  final  admins = Provider.of<List<UserData>>(context) ?? []; 
+  final  admins = Provider.of<List<UserData>>(context) ??[]; 
+
    return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
           key: _bottomNavigationKey,
@@ -51,7 +61,7 @@ String _headerText = "Admins";
          
           
             setState(() {
-            _addAdmin();
+            _addAdmin2();
             });
              
               },
@@ -95,7 +105,7 @@ String _headerText = "Admins";
        itemCount: admins.length,
        itemBuilder: (context ,index)
        {
-         return AdminTile(admin: admins[index]);
+         return AdminTile(admin: admins[index] ,uid:widget.uid );
        }
        
        
