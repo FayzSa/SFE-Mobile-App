@@ -60,7 +60,7 @@ class _SignInState extends State<SignIn> {
           children: <Widget>[
         SizedBox(height: 20),
         Text(
-          "Login" , style: TextStyle(color:Colors.white , fontWeight: FontWeight.bold, fontSize: 30),
+          "Se connecter" , style: TextStyle(color:Colors.white , fontWeight: FontWeight.bold, fontSize: 30),
           
           ),  
           SizedBox(height: 10,),
@@ -78,7 +78,7 @@ class _SignInState extends State<SignIn> {
            prefixIcon: Icon(Icons.mail , color:Colors.white54),
           ),
           
-          validator: (value)=> value.isEmpty ? "Entre an email " : null,
+          validator: (value)=> value.isEmpty ? "Entre un e-mail " : null,
           onChanged: (value)
           {
                 setState(() {
@@ -90,12 +90,12 @@ class _SignInState extends State<SignIn> {
          TextFormField(
            
           style: TextStyle(color:Colors.white70 ,fontSize: 17),
-          decoration:  textInputDeco.copyWith(hintText:"Password" , hintStyle:TextStyle(color:Colors.white60,fontSize: 14) , 
+          decoration:  textInputDeco.copyWith(hintText:"Mot de passe" , hintStyle:TextStyle(color:Colors.white60,fontSize: 14) , 
            prefixIcon: Icon(Icons.lock , color:Colors.white54),
           ),
              
           
-          validator: (value) => value.length < 6 ? "Entre an password with more than 6 chars " : null,
+          validator: (value) => value.length < 6 ? "Entre un mot de passe avec plus de 6 caractères " : null,
           obscureText: true,
           onChanged: (value)
           {
@@ -124,7 +124,7 @@ class _SignInState extends State<SignIn> {
               if(result==null)
               {
                 setState(() {
-                  error = "Could not sign in with those informations";
+                  error = "Impossible de se connecter avec ces informations";
                   isLoaded = false;
                 });
               
@@ -137,7 +137,7 @@ class _SignInState extends State<SignIn> {
   borderRadius: new BorderRadius.circular(18.0),
 
 ),
-              child: Text("Sign In" , style: TextStyle(
+              child: Text("Se connecter" , style: TextStyle(
         color:Colors.black87
               ),),
               ),
@@ -152,7 +152,7 @@ class _SignInState extends State<SignIn> {
                 },
                 
                 color: Colors.transparent,
-                child: Text("Registre" , style:TextStyle(
+                child: Text("S'inscrire" , style:TextStyle(
         color:Colors.white,
         fontWeight: FontWeight.bold
                 )),

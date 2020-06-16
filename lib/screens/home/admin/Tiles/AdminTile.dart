@@ -31,7 +31,7 @@ class AdminTile extends StatelessWidget {
 
                            children: <Widget>[
                             Center(
-                             child:Text("Are You Sure ?",style:TextStyle(
+                             child:Text("Êtes-vous sûr ?",style:TextStyle(
                               color: Colors.white,
                                fontSize: 25,
                                   )),

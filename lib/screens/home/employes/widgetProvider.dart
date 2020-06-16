@@ -27,7 +27,7 @@ class _WidgetProviderState extends State<WidgetProvider> {
   gn.addtotopic(departement);
  }
 
-String _headerText = "All Mails";
+String _headerText = "Tous les courriers";
 
 
    GlobalKey _bottomNavigationKey = GlobalKey();
@@ -43,7 +43,7 @@ String _headerText = "All Mails";
        return 
          Container(
            padding: EdgeInsets.all(50),
-           child:Center(child: Text("There's No Selected Page !!"))
+           child:Center(child: Text("Il n'y a pas de page sélectionnée !!"))
          );
      }
    }
@@ -83,7 +83,7 @@ String _headerText = "All Mails";
 
                            children: <Widget>[
                             Center(
-                             child:Text("Are You Sure ?",style:TextStyle(
+                             child:Text("Êtes-vous sûr ?",style:TextStyle(
                               color: Colors.white,
                                fontSize: 25,
                                   )),
@@ -129,9 +129,9 @@ String _headerText = "All Mails";
               
             }
             setState(() {
-              if(index == 0) _headerText = "All Mails";
-              if(index == 1) _headerText = "Traited Mails";
-              if(index == 2) _headerText = "Non Traited Mails";
+              if(index == 0) _headerText = "Tous les courriers";
+              if(index == 1) _headerText = "Mails traités";
+              if(index == 2) _headerText = "Courriers non traités";
               _showPage = _choosenPage(index);
             });
               },
@@ -163,7 +163,7 @@ String _headerText = "All Mails";
                               fontSize: 23
                             ),
                             ),
-                            Text("Department  ${userdata.departement}" ,style: TextStyle(
+                            Text("Service  ${userdata.departement}" ,style: TextStyle(
                               color: Colors.white,
                               
                               fontSize: 12

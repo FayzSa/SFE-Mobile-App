@@ -29,10 +29,12 @@ class _RegistreState extends State<Registre> {
   bool isLoaded = false;
 
  FocusNode focusNode = FocusNode();
+ UnfocusDisposition disposition = UnfocusDisposition.scope;
+  
 @override
 void initState() { 
   super.initState();
-   focusNode.unfocus(focusPrevious: true);
+   focusNode.unfocus(disposition: disposition);
 }
 
   @override
@@ -64,7 +66,7 @@ void initState() {
         children: <Widget>[
       SizedBox(height: 15),
       Text(
-        "Registre" , style: TextStyle(color:Colors.white , fontWeight: FontWeight.bold, fontSize: 30),
+        "S'inscrire" , style: TextStyle(color:Colors.white , fontWeight: FontWeight.bold, fontSize: 30),
         
         ),  
         SizedBox(height: 5,),
@@ -97,7 +99,7 @@ void initState() {
          prefixIcon: Icon(Icons.mail , color:Colors.white54),
         ),
         
-        validator: (value)=> value.isEmpty ? "Entre an email " : null,
+        validator: (value)=> value.isEmpty ? "Entre un e-mail " : null,
         onChanged: (value)
         {
               setState(() {
@@ -109,12 +111,12 @@ void initState() {
        TextFormField(
          
         style: TextStyle(color:Colors.white70 ,fontSize: 17),
-        decoration:  textInputDeco.copyWith(hintText:"Password" , hintStyle:TextStyle(color:Colors.white60,fontSize: 14) , 
+        decoration:  textInputDeco.copyWith(hintText:"Mot de passe" , hintStyle:TextStyle(color:Colors.white60,fontSize: 14) , 
          prefixIcon: Icon(Icons.lock , color:Colors.white54),
         ),
            
         
-        validator: (value) => value.length < 6 ? "Entre an password with more than 6 chars " : null,
+        validator: (value) => value.length < 6 ? "Entre un mot de passe avec plus de 6 caractères " : null,
         obscureText: true,
         onChanged: (value)
         {
@@ -145,13 +147,13 @@ void initState() {
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: DropdownButtonFormField(
-                   validator: (val)=> val == null ?  "Please Choose a Service " : null,
+                   validator: (val)=> val == null ?  "Veuillez choisir un service" : null,
               
                   
             
                   
                 // style:TextStyle(color: Colors.white70),
-                  hint:  Text("Please Choose a Service" , style:TextStyle(color: Colors.black87)),
+                  hint:  Text("Veuillez choisir un service" , style:TextStyle(color: Colors.black87)),
                   value: departement ,
                   items: 
                   widget.departs.map((s){
@@ -196,7 +198,7 @@ void initState() {
             if(result==null)
             {
               setState(() {
-                error = "Could not Registre in with those informations";
+                error = "Impossible de s'inscrire avec ces informations";
                 isLoaded = false;
               });
             
@@ -209,7 +211,7 @@ void initState() {
   borderRadius: new BorderRadius.circular(18.0),
 
 ),
-            child: Text("Registre" , style: TextStyle(
+            child: Text("S'inscrire" , style: TextStyle(
       color:Colors.black87
             ),),
             ),
@@ -225,7 +227,7 @@ void initState() {
               },
               
               color: Colors.transparent,
-              child: Text("Sign In" , style:TextStyle(
+              child: Text("Se connecter" , style:TextStyle(
       color:Colors.white,
       fontWeight: FontWeight.bold
               )),

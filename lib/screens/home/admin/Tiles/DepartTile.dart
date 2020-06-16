@@ -63,13 +63,13 @@ class DepartTile extends StatelessWidget {
                               children: <Widget>[
                                 SizedBox(height: 5,),
                                 Center(
-                                 child:Text("Are You Sure ?",style:TextStyle(
+                                 child:Text("Êtes-vous sûr ?",style:TextStyle(
                                   color: Colors.white,
                                    fontSize: 25,
                                     )),
                                      ),
                                       Center(
-                                 child:Text("If you delete this departement all emails and users in this department will be deleted ",style:TextStyle(
+                                 child:Text("Si vous supprimez ce département, tous les e-mails et les utilisateurs de ce département seront supprimés ",style:TextStyle(
                                   color: Colors.white60,
                                    fontSize: 12,
                                     )),

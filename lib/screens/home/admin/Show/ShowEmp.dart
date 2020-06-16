@@ -149,8 +149,8 @@ SizedBox(height: 10,),
                         visible: _enabled,
                         child: DropdownButtonFormField(
                           
-                   validator: (val)=> val == null ?  "Please Choose a Service " : null,
-                  hint:  Text("Please Choose a Service" , style:TextStyle(color: Colors.black87)),
+                   validator: (val)=> val == null ?  "Veuillez choisir un service " : null,
+                  hint:  Text("Veuillez choisir un service" , style:TextStyle(color: Colors.black87)),
                   value: depart ?? (widget.userData.departement ?? " ") ,
                   items: 
                   departs.map((s){

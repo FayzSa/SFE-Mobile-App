@@ -31,8 +31,8 @@ class _ReplyFormState extends State<ReplyForm> {
   bool visiblity = true;
   Widget _pickFile ;
 
-    Widget _sendMail = Text('Send Reply' , style: TextStyle(color:Colors.white));
-
+    Widget _sendMail = Text('Envoyer une réponse' , style: TextStyle(color:Colors.white));
+UnfocusDisposition disposition = UnfocusDisposition.scope;
   
   @override
   Widget build(BuildContext context) {
@@ -41,14 +41,14 @@ class _ReplyFormState extends State<ReplyForm> {
               
               onPressed: ()
               async {
-                FocusScope.of(context).unfocus(focusPrevious: true);
+                FocusScope.of(context).unfocus(disposition: disposition);
                 _files = await FilePicker.getMultiFile();
                // print("LEN : ${_files.length}");
               },
                         child: Row(
                 children: <Widget>[
                   Icon(Icons.attach_file , color: Colors.white,),
-                  Text("Pick File" , style: TextStyle(
+                  Text("Choisir un fichier (s)" , style: TextStyle(
                    
                     color: Colors.white
                   ),),
@@ -86,7 +86,7 @@ class _ReplyFormState extends State<ReplyForm> {
                         padding: const EdgeInsets.all(20.0),
                         child: Column(
                           children: <Widget>[
-                            Text("Reply to Mail" ,style: TextStyle(
+                            Text("Répondre au courrier" ,style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
                               fontSize: 23
@@ -106,11 +106,11 @@ class _ReplyFormState extends State<ReplyForm> {
                  child: TextFormField(
            enabled: _enabled,
           style: TextStyle(color:Colors.white70),
-          decoration: textInputDeco.copyWith(hintText:"Title" , hintStyle:TextStyle(color: Colors.white60 , fontSize: 14), 
+          decoration: textInputDeco.copyWith(hintText:"Titre" , hintStyle:TextStyle(color: Colors.white60 , fontSize: 14), 
            prefixIcon: Icon(Icons.title , color:Colors.white54),
           ),
           
-          validator: (value)=> value.isEmpty ? "Entre a Title " : null,
+          validator: (value)=> value.isEmpty ? "Entre un Titre " : null,
           onChanged: (value)
           {
                   setState(() {
@@ -128,11 +128,11 @@ SizedBox(height: 40,),
                  maxLines: null,
     keyboardType: TextInputType.multiline,
           style: TextStyle(color:Colors.white70),
-          decoration: textInputDeco.copyWith(hintText:"Body" , hintStyle:TextStyle(color: Colors.white60 , fontSize: 14), 
+          decoration: textInputDeco.copyWith(hintText:"Contenu" , hintStyle:TextStyle(color: Colors.white60 , fontSize: 14), 
            prefixIcon: Icon(Icons.subject , color:Colors.white54),
           ),
           
-          validator: (value)=> value.isEmpty ? "Entre some text " : null,
+          validator: (value)=> value.isEmpty ? "Entre le Contenu " : null,
           onChanged: (value)
           {
                   setState(() {
@@ -169,9 +169,9 @@ SizedBox(height: 40,),
                            _sendMail = Row(
                             
                              children: <Widget>[
-                               Text('Sent' , style: TextStyle(color:Colors.white)),
+                               Text('Envoyé' , style: TextStyle(color:Colors.white)),
                                SizedBox(width: 5),
-                               Icon(Icons.done_all , color: Colors.white,semanticLabel: "Sent"),
+                               Icon(Icons.done_all , color: Colors.white,semanticLabel: "Envoyé"),
                              ],
                            );
                          });
@@ -180,9 +180,9 @@ SizedBox(height: 40,),
                            _sendMail = Row(
                             
                              children: <Widget>[
-                               Text('Can not Send' , style: TextStyle(color:Colors.red)),
+                               Text('Ne peut pas être envoyé' , style: TextStyle(color:Colors.red)),
                                SizedBox(width: 5),
-                               Icon(Icons.cancel , color: Colors.red,semanticLabel: "Sent"),
+                               Icon(Icons.cancel , color: Colors.red,semanticLabel: ""),
                              ],
                            );
                          });

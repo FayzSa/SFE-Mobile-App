@@ -19,6 +19,8 @@ class DatabaseService
     final CollectionReference mailGest = Firestore.instance.collection('users');
     final CollectionReference emailsGest = Firestore.instance.collection('emails');
     final CollectionReference departGest = Firestore.instance.collection('Departments');
+    final CollectionReference departGest2 = Firestore.instance.collection('Departments');
+   // var docs = Firestore.instance.document("");
     final GestionNotification gestionnotification = new GestionNotification();
     final StorageReference storageRef =
         FirebaseStorage.instance.ref();   
@@ -71,7 +73,7 @@ class DatabaseService
       title: doc.data['Title'],
       dateRecive: doc.data['DateRecive'].toString(),
       traited: doc.data['Traited'],
-      repEmail:doc.data['ReplayMail'],
+      repEmail:doc.data['ReplayMail'] ?? {},
       files: doc.data['Files'],
       delay: doc.data["Delay"],
       department: doc.data['Department'],
@@ -191,7 +193,7 @@ updateTraited(Email em)async
         );
  ///save the token for replay notification from the employer
   // to changer after
-   await gestionnotification.sendNotification('Email from : $depart','Email title : '+ em.title,topic: '$depart',);
+   await gestionnotification.sendNotification('Service : $depart','Email titre : '+ em.title,topic: '$depart',);
             print('your uid is  :  '+userid);
 
     

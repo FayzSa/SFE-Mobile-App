@@ -22,7 +22,7 @@ Timer t ;
 setState(() {
 t = Timer(Duration(seconds: 10), (){
       setState(() {
-         toShowBefore = Center(child: Text("You Have No Email",style: TextStyle(
+         toShowBefore = Center(child: Text("Vous n'avez pas de courrier",style: TextStyle(
         color: Colors.black87,
         fontSize: 20,
       ),),);

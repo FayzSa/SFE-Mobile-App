@@ -35,14 +35,16 @@ class _SendMailFormState extends State<SendMailForm> {
   bool _enabled = true;
   bool visiblity = true;
   Widget _pickFile ;
-  Widget _sendMail = Text('Send Mail' , style: TextStyle(color:Colors.white));
+  Widget _sendMail = Text('Envoyer un Courrier' , style: TextStyle(color:Colors.white));
  FocusNode focusNode = FocusNode();
-
+UnfocusDisposition disposition = UnfocusDisposition.scope;
 @override
 void initState() { 
   super.initState();
-  focusNode.unfocus(focusPrevious: true);
+  
+  focusNode.unfocus(disposition: disposition);
 }
+
 
   @override
   Widget build(BuildContext context) {
@@ -51,14 +53,14 @@ void initState() {
               
               onPressed: ()
               async {
-                FocusScope.of(context).unfocus(focusPrevious: true);
+                FocusScope.of(context).unfocus(disposition: disposition);
                 _files = await FilePicker.getMultiFile();
                // print("LEN : ${_files.length}");
               },
                         child: Row(
                 children: <Widget>[
                   Icon(Icons.attach_file , color: Colors.white,),
-                  Text("Pick File" , style: TextStyle(
+                  Text("Choisir un fichier(s)" , style: TextStyle(
                    
                     color: Colors.white
                   ),),
@@ -107,7 +109,7 @@ void initState() {
                         padding: const EdgeInsets.all(20.0),
                         child: Column(
                           children: <Widget>[
-                            Text("Send Mail" ,style: TextStyle(
+                            Text("Envoyer un mail" ,style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
                               fontSize: 23
@@ -126,11 +128,11 @@ void initState() {
                  child: TextFormField(
            enabled: _enabled,
           style: TextStyle(color:Colors.white70),
-          decoration: textInputDeco.copyWith(hintText:"Title" , hintStyle:TextStyle(color: Colors.white60 , fontSize: 14), 
+          decoration: textInputDeco.copyWith(hintText:"Titre" , hintStyle:TextStyle(color: Colors.white60 , fontSize: 14), 
            prefixIcon: Icon(Icons.title , color:Colors.white54),
           ),
           
-          validator: (value)=> value.isEmpty ? "Entre a Title " : null,
+          validator: (value)=> value.isEmpty ? "Entre un Titre " : null,
           onChanged: (value)
           {
                   setState(() {
@@ -148,11 +150,11 @@ SizedBox(height: 20,),
                  maxLines: null,
     keyboardType: TextInputType.multiline,
           style: TextStyle(color:Colors.white70),
-          decoration: textInputDeco.copyWith(hintText:"Body" , hintStyle:TextStyle(color: Colors.white60 , fontSize: 14), 
+          decoration: textInputDeco.copyWith(hintText:"Contenu" , hintStyle:TextStyle(color: Colors.white60 , fontSize: 14), 
            prefixIcon: Icon(Icons.subject , color:Colors.white54),
           ),
           
-          validator: (value)=> value.isEmpty ? "Entre some text " : null,
+          validator: (value)=> value.isEmpty ? "Entre le contenu " : null,
           onChanged: (value)
           {
                   setState(() {
@@ -172,7 +174,7 @@ Padding(
            prefixIcon: Icon(Icons.view_day , color:Colors.white54),
           ),
           
-          validator: (value)=> value.isEmpty || int.tryParse(value) == null ? "Entre a delay or valide delay" : null,
+          validator: (value)=> value.isEmpty || int.tryParse(value) == null ? "Entre le delay ou valide delay" : null,
           onChanged: (value)
           {
                   setState(() {
@@ -203,13 +205,13 @@ Padding(
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: DropdownButtonFormField(
-                     validator: (val)=> val == null ?  "Please Choose a Service " : null,
+                     validator: (val)=> val == null ?  "Veuillez choisir un service " : null,
                 
                     
               
                     
                   // style:TextStyle(color: Colors.white70),
-                    hint:  Text("Please Choose a Department" , style:TextStyle(color: Colors.black87)),
+                    hint:  Text("Veuillez choisir un service" , style:TextStyle(color: Colors.black87)),
                     value: departement ,
                     items: 
                     widget.departs.map((s){
@@ -262,9 +264,9 @@ Padding(
                            _sendMail = Row(
                             
                              children: <Widget>[
-                               Text('Sent' , style: TextStyle(color:Colors.white)),
+                               Text('Envoyé' , style: TextStyle(color:Colors.white)),
                                SizedBox(width: 5),
-                               Icon(Icons.done_all , color: Colors.white,semanticLabel: "Sent"),
+                               Icon(Icons.done_all , color: Colors.white,semanticLabel: "Envoyé"),
                              ],
                            );
                          });
@@ -275,9 +277,9 @@ Padding(
                            _sendMail = Row(
                             
                              children: <Widget>[
-                               Text('Can not send' , style: TextStyle(color:Colors.red)),
+                               Text('Ne peut pas être envoyé' , style: TextStyle(color:Colors.red)),
                                SizedBox(width: 5),
-                               Icon(Icons.cancel , color: Colors.red,semanticLabel: "Sent"),
+                               Icon(Icons.cancel , color: Colors.red,semanticLabel: ""),
                              ],
                            );
                          });

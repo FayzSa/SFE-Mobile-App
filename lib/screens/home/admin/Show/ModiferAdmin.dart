@@ -19,7 +19,7 @@ String name ;
 bool _enabled = true;
 final _formKey = GlobalKey<FormState>();
 
-Widget _sendMail = Text('Modifie Admin' , style: TextStyle(color:Colors.white));
+Widget _sendMail = Text('Modifier Admin' , style: TextStyle(color:Colors.white));
 
   
   @override
@@ -50,7 +50,7 @@ Widget _sendMail = Text('Modifie Admin' , style: TextStyle(color:Colors.white));
                         child: Column(
                           children: <Widget>[
                             Center(
-                              child: Text("Modifie Admin" ,style: TextStyle(
+                              child: Text("Modifier Admin" ,style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 23
@@ -107,7 +107,7 @@ Widget _sendMail = Text('Modifie Admin' , style: TextStyle(color:Colors.white));
                            _sendMail = Row(
                             
                              children: <Widget>[
-                               Text('Modifie' , style: TextStyle(color:Colors.white)),
+                               Text('Modifier' , style: TextStyle(color:Colors.white)),
                                SizedBox(width: 5),
                                Icon(Icons.done_all , color: Colors.white,semanticLabel: "Modifie"),
                              ],

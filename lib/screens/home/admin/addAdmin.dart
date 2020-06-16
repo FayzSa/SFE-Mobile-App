@@ -24,7 +24,7 @@ class _AddAdminState extends State<AddAdmin> {
 Widget fs ;
 
 
-    Widget _sendMail = Text('Add Admin' , style: TextStyle(color:Colors.white));
+    Widget _sendMail = Text('Ajouter Admin' , style: TextStyle(color:Colors.white));
 
   
   @override
@@ -103,7 +103,7 @@ SizedBox(height: 10,),
          prefixIcon: Icon(Icons.mail , color:Colors.white54),
         ),
         
-        validator: (value)=> value.isEmpty ? "Entre an email " : null,
+        validator: (value)=> value.isEmpty ? "Entre un e-mail " : null,
         onChanged: (value)
         {
               setState(() {
@@ -120,12 +120,12 @@ SizedBox(height: 10,),
                child: TextFormField(
          
         style: TextStyle(color:Colors.white70 ,fontSize: 17),
-        decoration:  textInputDeco.copyWith(hintText:"Password" , hintStyle:TextStyle(color:Colors.white60,fontSize: 14) , 
+        decoration:  textInputDeco.copyWith(hintText:"Mot de passe" , hintStyle:TextStyle(color:Colors.white60,fontSize: 14) , 
          prefixIcon: Icon(Icons.lock , color:Colors.white54),
         ),
            
         enabled: _enabled,
-        validator: (value) => value.length < 6 ? "Entre an password with more than 6 chars " : null,
+        validator: (value) => value.length < 6 ? "Entre un mot de passe avec plus de 6 caractères " : null,
         obscureText: true,
         onChanged: (value)
         {
@@ -157,9 +157,9 @@ SizedBox(height: 10,),
                            _sendMail = Row(
                             
                              children: <Widget>[
-                               Text('Added' , style: TextStyle(color:Colors.white)),
+                               Text('Ajouté' , style: TextStyle(color:Colors.white)),
                                SizedBox(width: 5),
-                               Icon(Icons.done_all , color: Colors.white,semanticLabel: "Added"),
+                               Icon(Icons.done_all , color: Colors.white,semanticLabel: "Ajouté"),
                              ],
                            );
                          });
@@ -171,9 +171,9 @@ SizedBox(height: 10,),
                            _sendMail = Row(
                             
                              children: <Widget>[
-                               Text('Can not Add' , style: TextStyle(color:Colors.red)),
+                               Text("Impossible d'ajouter" , style: TextStyle(color:Colors.red)),
                                SizedBox(width: 5),
-                               Icon(Icons.cancel , color: Colors.red,semanticLabel: "Added"),
+                               Icon(Icons.cancel , color: Colors.red,semanticLabel: ""),
                              ],
                            );
                          });

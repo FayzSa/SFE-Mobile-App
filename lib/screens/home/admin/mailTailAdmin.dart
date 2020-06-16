@@ -56,12 +56,12 @@ class MailTileAdmin extends StatelessWidget {
 
       Color tileColor = Colors.green[200];
 
-      if(email.traited != "Not Traited" )
+      if(email.traited != "Non Traite" )
     {
       if(email.repEmail.isNotEmpty && email.repEmail["NOTHING"] != "NOTHING"  ){
         f2 =                 
                  FlatButton(
-                  child:  Text('Show Reply' , style: TextStyle(color:Colors.black),),
+                  child:  Text('Afficher la réponse' , style: TextStyle(color:Colors.black),),
                   onPressed: () {
                     _showReplyPanel();   
                   },
@@ -121,7 +121,7 @@ class MailTileAdmin extends StatelessWidget {
                        ),
                        Align(
                          alignment: Alignment.topLeft,
-                      child: Text("Department ${email.department}" , style: TextStyle(
+                      child: Text("Service ${email.department}" , style: TextStyle(
                       color:Colors.black,
                       fontSize: 13,
                       fontWeight: FontWeight.w100,

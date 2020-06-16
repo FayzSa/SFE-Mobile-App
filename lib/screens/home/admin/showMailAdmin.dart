@@ -50,7 +50,7 @@ class _ShowMailAdminState extends State<ShowMailAdmin> {
       if(widget.email.repEmail.isNotEmpty && widget.email.repEmail["NOTHING"] != "NOTHING"  ){
         f2 =                 
                  FlatButton(
-                  child:  Text('Show Reply' , style: TextStyle(color:Colors.white),),
+                  child:  Text('Afficher la réponse' , style: TextStyle(color:Colors.white),),
                   onPressed: () {
                     _showReplyPanel();   
                   },
@@ -62,7 +62,7 @@ class _ShowMailAdminState extends State<ShowMailAdmin> {
         tileColor = Colors.green[200];
       }
       else if(widget.email.traited == "Traited"){
-        f = Text('Traited Mail' , style: TextStyle(color:Colors.green[500]));
+        f = Text('Courrier traité' , style: TextStyle(color:Colors.green[500]));
        
        tileColor = Colors.green[500];
      
@@ -121,7 +121,7 @@ class _ShowMailAdminState extends State<ShowMailAdmin> {
               ),
                             ],
                             ),
-                            Text("Department : ${widget.email.department}" , style: TextStyle(
+                            Text("Service : ${widget.email.department}" , style: TextStyle(
                       color:Colors.black,
                       fontSize: 13,
                       fontWeight: FontWeight.w100,
@@ -171,7 +171,7 @@ class _ShowMailAdminState extends State<ShowMailAdmin> {
               },
               
               color: Colors.black87,
-              child: Text("Download" , style:TextStyle(
+              child: Text("Télécharger" , style:TextStyle(
             color:Colors.white60,
             
               )

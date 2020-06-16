@@ -22,7 +22,7 @@ class _ListAllMailsState extends State<ListAllMails> {
     setState(() {
    t = Timer(Duration(seconds: 10), (){
       setState(() {
-         toShowBefore = Center(child: Text("There's No Email yet",style: TextStyle(
+         toShowBefore = Center(child: Text("Il n'y a pas de mails",style: TextStyle(
         color: Colors.black87,
         fontSize: 20,
       ),),);

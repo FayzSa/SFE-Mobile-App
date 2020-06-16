@@ -43,7 +43,7 @@ class MailTile extends StatelessWidget {
       if(email.repEmail.isEmpty ){
         f2 =                 
                  FlatButton(
-                  child:  Text('Reply' , style: TextStyle(color:Colors.black87),),
+                  child:  Text('Réponse' , style: TextStyle(color:Colors.black87),),
                   onPressed: () {
                     _showReplyPanel();   
                   },
@@ -53,7 +53,7 @@ class MailTile extends StatelessWidget {
       if(email.traited == "Still")
       {
         f =  FlatButton(
-                  child:  Text('Traite' , style: TextStyle(color:Colors.black87),),
+                  child:  Text('Traité' , style: TextStyle(color:Colors.black87),),
                   onPressed: () {
                     DatabaseService().updateTraited(email);
                   },

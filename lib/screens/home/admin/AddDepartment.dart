@@ -18,7 +18,7 @@ bool _enabled = true;
 final _formKey = GlobalKey<FormState>();
 String error = '';
 
-Widget _sendMail = Text('Add Service' , style: TextStyle(color:Colors.white));
+Widget _sendMail = Text('Ajouter Service' , style: TextStyle(color:Colors.white));
 Widget _loading =  Loading(indicator: BallSpinFadeLoaderIndicator(), size: 30.0,color: Colors.white);
   
   @override
@@ -112,9 +112,9 @@ Widget _loading =  Loading(indicator: BallSpinFadeLoaderIndicator(), size: 30.0,
                            _sendMail = Row(
                             
                              children: <Widget>[
-                               Text('Added' , style: TextStyle(color:Colors.white)),
+                               Text('Ajouté' , style: TextStyle(color:Colors.white)),
                                SizedBox(width: 5),
-                               Icon(Icons.done_all , color: Colors.white,semanticLabel: "Added"),
+                               Icon(Icons.done_all , color: Colors.white,semanticLabel: "Ajouté"),
                              ],
                            );
 
@@ -129,9 +129,9 @@ Widget _loading =  Loading(indicator: BallSpinFadeLoaderIndicator(), size: 30.0,
                            _sendMail = Row(
                             
                              children: <Widget>[
-                               Text('Can not add' , style: TextStyle(color:Colors.red)),
+                               Text("Impossible d'ajouter" , style: TextStyle(color:Colors.red)),
                                SizedBox(width: 5),
-                               Icon(Icons.cancel , color: Colors.red,semanticLabel: "Added"),
+                               Icon(Icons.cancel , color: Colors.red,semanticLabel: ""),
                              ],
                            );
 

@@ -67,7 +67,7 @@ class _ShowReplyState extends State<ShowReply> {
               ),
                             ],
                             ),
-                            Text("Department : ${widget.email.department}" , style: TextStyle(
+                            Text("Service : ${widget.email.department}" , style: TextStyle(
                       color:Colors.black,
                       fontSize: 13,
                       fontWeight: FontWeight.w100,
@@ -117,7 +117,7 @@ class _ShowReplyState extends State<ShowReply> {
               },
               
               color: Colors.black87,
-              child: Text("Download" , style:TextStyle(
+              child: Text("Télécharger" , style:TextStyle(
             color:Colors.white60,
             
               )

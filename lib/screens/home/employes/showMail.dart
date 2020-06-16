@@ -45,7 +45,7 @@ class _ShowMailState extends State<ShowMail> {
       if(widget.email.repEmail.isEmpty  ){
         f2 =                 
                  FlatButton(
-                  child:  Text('Reply' , style: TextStyle(color:Colors.white),),
+                  child:  Text('Réponse' , style: TextStyle(color:Colors.white),),
                   onPressed: () {
                     _showReplyPanel();   
                   },
@@ -159,7 +159,7 @@ class _ShowMailState extends State<ShowMail> {
               },
               
               color: Colors.black87,
-              child: Text("Download" , style:TextStyle(
+              child: Text("Télécharger" , style:TextStyle(
             color:Colors.white60,
             
               )

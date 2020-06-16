@@ -43,7 +43,7 @@ class _WdigetProviderAdminState extends State<WdigetProviderAdmin> {
 
     
    }
-String _headerText = "All Mails";
+String _headerText = "Tous les courriers";
 
 Widget _showPage = MainAdmin();
   Widget _choosenPage(int index){
@@ -57,7 +57,7 @@ Widget _showPage = MainAdmin();
 
          body: Container(
            padding: EdgeInsets.all(50),
-           child:Center(child: Text("There's No Selected Page !!"))
+           child:Center(child: Text("Il n'y a pas de page sélectionnée !!"))
          ),
 
        );
@@ -113,7 +113,7 @@ Widget _showPage = MainAdmin();
 
                            children: <Widget>[
                             Center(
-                             child:Text("Are You Sure ?",style:TextStyle(
+                             child:Text("Êtes-vous sûr ?",style:TextStyle(
                               color: Colors.white,
                                fontSize: 25,
                                   )),
@@ -164,8 +164,8 @@ Widget _showPage = MainAdmin();
           
             setState(() {
               if(index == 0) _headerText = "All Mails";
-              if(index == 1) _headerText = "Filters";
-              if(index == 2) _headerText = "Settings";
+              if(index == 1) _headerText = "Filtres";
+              if(index == 2) _headerText = "Réglages";
               _showPage = _choosenPage(index);
             });
              
